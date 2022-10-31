@@ -2,9 +2,13 @@ package com.finalproject.bugme.issue;
 
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.finalproject.bugme.allenums.Priority;
+import com.finalproject.bugme.allenums.Status;
+import com.finalproject.bugme.allenums.Type;
 import com.finalproject.bugme.comment.Comment;
 import com.finalproject.bugme.person.Person;
 import com.finalproject.bugme.project.Project;
+import com.finalproject.bugme.tag.Tag;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -22,11 +26,14 @@ public class Issue {
     @Column(nullable = false)
     private Long id;
 
-    //Change to enum: status, priority, type;
-   private String status;
-   private String priority;
-    private String type;
-    //private List<Enum> tags;
+
+   private Status status;
+   private Priority priority;
+   private Type type;
+
+    @OneToMany(mappedBy = "issue")
+    @JsonIgnoreProperties("issue")
+    private List<Tag> tags;
 
     @Column(nullable = false, length = 255)
     private String name;
@@ -66,7 +73,7 @@ public class Issue {
     private Person assignee;
 
 
-    public Issue(String status, String priority, String type, String name, String description, String code, Date dateCreated, Date lastUpdate) {
+    public Issue(Status status, Priority priority, Type type, String name, String description, String code, Date dateCreated, Date lastUpdate) {
         this.status = status;
         this.priority = priority;
         this.type = type;

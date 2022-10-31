@@ -30,19 +30,19 @@ public class Person {
     @Column(nullable = false,length = 255)
     private String userRealName;
 
-    @OneToMany(mappedBy="person")
+    @OneToMany(mappedBy="creator")
     @JsonIgnoreProperties("person")
     private Set<Project> projects;
 
-    @OneToMany(mappedBy="person")
+    @OneToMany(mappedBy="author")
     @JsonIgnoreProperties("person")
     private Set<Comment> comments;
 
-    @OneToMany(mappedBy = "person")
+    @OneToMany(mappedBy="creator")
     @JsonIgnoreProperties("person")
     private Set<Issue> issuesCreated;
 
-    @OneToMany(mappedBy = "person")
+    @OneToMany(mappedBy ="assignee")
     @JsonIgnoreProperties("person")
     private Set<Issue> issuesAssigned;
 
