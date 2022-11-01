@@ -4,7 +4,7 @@ html,body{
     min-height: 100%;
     max-width: 100%;
     background-color: #2a282e;
-    color: antiquewhite;
+    color: antiquewhite !important;
 }
 
 body, ul, ol, dl,p{
@@ -19,24 +19,14 @@ img {
     max-width: 100%;
 }
 
-
-
-.bug-logo{
-    width: 2.5rem;
-    height: auto;
-    margin-left: 0.5rem;
-    margin-right: 0.5rem;
-}
-.no-padding{
+.color-light-logo{
+    color: antiquewhite;
+    font-weight: bold;
     padding:0;
-
 }
 
-.website-name{
-    font-size: large;
+.href-hover:hover{
+    color: blueviolet;
 }
 
-.footer{
 
-    padding-top: .5rem;
-}
