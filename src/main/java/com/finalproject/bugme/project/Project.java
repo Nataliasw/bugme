@@ -25,10 +25,6 @@ public class Project {
 
 
 
-    @OneToMany(mappedBy="project")
-    @JsonIgnoreProperties("project")
-    private Set<Issue> issues;
-
     @ManyToOne
     @JoinColumn(name="creator_id")
     @JsonIgnoreProperties("projects")
@@ -44,7 +40,7 @@ public class Project {
     @Column(unique = true, nullable = false, length = 255)
     private String code;
 
-    @Column(unique = true, nullable = false, length = 2000)
+    @Column(columnDefinition="TEXT")
     private String description;
 
     public Project(String name, boolean enabled,String code, String description){

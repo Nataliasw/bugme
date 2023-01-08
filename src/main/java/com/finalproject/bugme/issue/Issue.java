@@ -29,7 +29,10 @@ public class Issue {
 
    private Status status;
    private Priority priority;
-   private Type type;
+
+    @Column(nullable=false)
+    @Enumerated(EnumType.STRING)
+   private Type type = Type.TASK;
 
     @OneToMany(mappedBy = "issue")
     @JsonIgnoreProperties("issue")
@@ -38,7 +41,7 @@ public class Issue {
     @Column(nullable = false, length = 255)
     private String name;
 
-    @Column(nullable = false, length = 2000)
+    @Column(columnDefinition = "TEXT")
     private String description;
 
     @Column(nullable=false)
