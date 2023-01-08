@@ -5,7 +5,8 @@ import com.finalproject.bugme.issue.Issue;
 import com.finalproject.bugme.person.Person;
 import lombok.*;
 
-import javax.persistence.*;
+
+import jakarta.persistence.*;
 import java.util.Date;
 
 @Setter

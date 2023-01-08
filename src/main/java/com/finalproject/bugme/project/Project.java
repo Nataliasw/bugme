@@ -3,10 +3,11 @@ package com.finalproject.bugme.project;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.finalproject.bugme.issue.Issue;
 import com.finalproject.bugme.person.Person;
+import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
-import javax.persistence.*;
+
 import java.util.Date;
 import java.util.Set;
 
@@ -16,8 +17,7 @@ import java.util.Set;
 public class Project {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(nullable = false)
+    @GeneratedValue
     private Long id;
 
     @Column(unique = true, nullable = false, length = 255)

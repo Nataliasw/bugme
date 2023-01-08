@@ -5,10 +5,11 @@ import com.finalproject.bugme.authority.Authority;
 import com.finalproject.bugme.comment.Comment;
 import com.finalproject.bugme.issue.Issue;
 import com.finalproject.bugme.project.Project;
+import jakarta.persistence.Entity;
 import lombok.Getter;
 import lombok.Setter;
 
-import javax.persistence.*;
+import jakarta.persistence.*;
 import java.util.Set;
 
 @Setter
