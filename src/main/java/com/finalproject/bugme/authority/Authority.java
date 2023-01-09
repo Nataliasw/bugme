@@ -1,6 +1,7 @@
 package com.finalproject.bugme.authority;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.finalproject.bugme.allenums.AuthorityName;
 import com.finalproject.bugme.person.Person;
 import lombok.Getter;
 import lombok.Setter;
@@ -18,15 +19,13 @@ public class Authority {
     @Column(nullable = false)
     private Long id;
 
-    @Column(unique = true,length = 256)
-    private String name;
+    @Column(nullable = false, unique = true)
+    @Enumerated(EnumType.STRING)
+    private AuthorityName name;
 
-    @ManyToOne
-    @JoinColumn(name="person_id")
-    @JsonIgnoreProperties("authorities")
-    private Person person;
 
-    public Authority(String name){
+
+    public Authority(AuthorityName name){
         this.name = name;
     }
 
