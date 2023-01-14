@@ -15,55 +15,94 @@
     <link rel="shortcut icon" href="/images/favicon.ico"/>
 </head>
 <body>
-<form th:action="@{/people/save}" th:object="${person}" method="post">
-    <input type="hidden" th:field="*{id}"/>
-    <div class="row">
+<section class="container">
+    <form th:action="@{/people/save}" th:object="${person}" method="post">
+        <input type="hidden" th:field="*{id}"/>
+        <div class="row">
+            <div class="mb-3">
+                <div><label for="login">Login</label></div>
+            </div>
+            <div>
+                <input
+                        id="login"
+                        type="text"
+                        th:field="*{login}"
+                        placeholder="Username"
+                        th:class="'form-control ' + ${#fields.hasErrors('username') ? 'is-invalid' : ''}"/>
+                />
+                <small class="text-danger"
+                       th:if="${#fields.hasErrors('login')}"
+                       th:errors="*{login}"></small>
+            </div>
+
+        </div>
+        <div class="row">
+            <div class="mb-3">
+                <div><label for="user_real_name">Imię</label></div>
+            </div>
+            <div>
+                <input
+                        id="user_real_name"
+                        type="text"
+                        th:field="*{userRealName}"
+                        placeholder="RealName"
+                        th:class="'form-control ' + ${#fields.hasErrors('userRealName') ? 'is-invalid' : ''}"/>
+                />
+                <small class="text-danger"
+                       th:if="${#fields.hasErrors('name')}"
+                       th:errors="*{userRealName}"></small>
+            </div>
+        </div>
         <div class="mb-3">
-            <div><label for="login">Login</label></div>
-        </div>
-        <div>
-            <input
-                    id="login"
-                    type="text"
-                    th:field="*{login}"
-                    placeholder="Username"
-                    class="form-control"
-            />
+            <div>
+                <label for="password">Hasło</label>
+            </div>
+            <div>
+                <input id="password"
+                       type="password"
+                       th:field="*{password}"
+                       placeholder="Hasło"
+                       th:class="'form-control ' + ${#fields.hasErrors('password') ? 'is-invalid' : ''}"/>
+
+                <small class="text-danger"
+                       th:if="${#fields.hasErrors('password')}"
+                       th:errors="*{password}"></small>
+            </div>
+            <div class="mb-3">
+                <div>
+                    <label for="repeated-password">Powtórz hasło</label>
+                </div>
+                <div>
+                    <input id="repeated-password"
+                           type="password"
+                           th:field="*{repeatedPassword}"
+                           placeholder="Hasło"
+                           th:class="'form-control ' + ${#fields.hasErrors('repeatedPassword') ? 'is-invalid' : ''}"/>
+
+                    <small class="text-danger"
+                           th:if="${#fields.hasErrors('repeatedPassword')}"
+                           th:errors="*{repeatedPassword}"></small>
+                </div>
+            </div>
         </div>
 
-    </div>
-    <div class="row">
         <div class="mb-3">
-            <div><label for="user_real_name">Login</label></div>
-        </div>
-        <div>
-            <input
-                    id="user_real_name"
-                    type="text"
-                    th:field="*{userRealName}"
-                    placeholder="RealName"
-                    class="form-control"
-            />
-        </div>
-    </div>
-    <div class="mb-3">
-        <div>
-            <label for="password">Hasło</label>
-        </div>
-        <div>
-            <input id="password"
-                   type="password"
-                   th:field="*{password}"
-                   placeholder="Hasło"
-                   th:class="'form-control ' + ${#fields.hasErrors('password') ? 'is-invalid' : ''}"/>
+            Uprawnienia:
 
+            <p th:each="authority : ${authorities}">
+                <input type="checkbox" name="authorities"
+                       th:value="${authority.id}"
+                       th:field="*{authorities}"/>
 
+                <label th:text="#{${'authority.' + authority.name}}"
+                       th:for="${#ids.prev('authorities')}"></label>
+            </p>
         </div>
-    </div>
 
-    <div>
-        <button type="submit" clas="btn btn-primary" th:text="Zapisz"></button>
-    </div>
-</form>
+        <div>
+            <button type="submit" clas="btn btn-primary" th:text="Zapisz"></button>
+        </div>
+    </form>
+</section>
 </body>
 </html>
