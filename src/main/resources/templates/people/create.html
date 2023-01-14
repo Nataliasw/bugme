@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<form th:action="@{/people/save}" th:object="${person}" method="post">
+    <input type="hidden" th:field="*{person.id}"/>
+    <div class="row">
+        <div class="mb-3">
+            <div><label for="login">Login</label></div>
+        </div>
+        <div>
+            <input
+                    id="login"
+                    type="text"
+                    th:field="*{person.login}"
+                    placeholder="Username"
+                    class="form-control"
+            />
+        </div>
+
+    </div>
+    <div class="row">
+        <div class="mb-3">
+            <div><label for="user_real_name">Login</label></div>
+        </div>
+        <div>
+            <input
+                    id="user_real_name"
+                    type="text"
+                    th:field="*{person.userRealName}"
+                    placeholder="RealName"
+                    class="form-control"
+            />
+        </div>
+    </div>
+    <div class="mb-3">
+        <div>
+            <label for="password">Hasło</label>
+        </div>
+        <div>
+            <input id="password"
+                   type="password"
+                   th:field="*{person.password}"
+                   placeholder="Hasło"
+                   th:class="'form-control ' + ${#fields.hasErrors('password') ? 'is-invalid' : ''}"/>
+
+
+        </div>
+    </div>
+
+    <div>
+        <button type="submit" clas="btn btn-primary" th:text="Zapisz"></button>
+    </div>
+</form>
+</body>
+</html>

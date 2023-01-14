@@ -7,12 +7,14 @@ import com.finalproject.bugme.issue.Issue;
 import com.finalproject.bugme.project.Project;
 import jakarta.persistence.Entity;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import jakarta.persistence.*;
 import java.util.Set;
 
 @Setter
+@NoArgsConstructor
 @Getter
 @Entity
 public class Person {
@@ -63,6 +65,5 @@ public class Person {
         this.userRealName = userRealName;
     }
 
-    public Person() {
-    }
+
 }
