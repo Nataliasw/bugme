@@ -28,11 +28,27 @@
                         type="text"
                         th:field="*{login}"
                         placeholder="Username"
-                        th:class="'form-control ' + ${#fields.hasErrors('username') ? 'is-invalid' : ''}"/>
-                />
+                        th:class="'form-control ' + ${#fields.hasErrors('login') ? 'is-invalid' : ''}"/>
+
                 <small class="text-danger"
                        th:if="${#fields.hasErrors('login')}"
                        th:errors="*{login}"></small>
+            </div>
+
+        </div>
+        <div class="row">
+            <div class="mb-3">
+                <div><label for="email">Email</label></div>
+            </div>
+            <div>
+                <input
+                        id="email"
+                        type="text"
+                        th:field="*{email}"
+                        placeholder="email"
+                        th:class="'form-control ' + ${#fields.hasErrors('login') ? 'is-invalid' : ''}"
+                        />
+
             </div>
 
         </div>
@@ -47,9 +63,9 @@
                         th:field="*{userRealName}"
                         placeholder="RealName"
                         th:class="'form-control ' + ${#fields.hasErrors('userRealName') ? 'is-invalid' : ''}"/>
-                />
+
                 <small class="text-danger"
-                       th:if="${#fields.hasErrors('name')}"
+                       th:if="${#fields.hasErrors('userRealName')}"
                        th:errors="*{userRealName}"></small>
             </div>
         </div>
@@ -90,17 +106,18 @@
             Uprawnienia:
 
             <p th:each="authority : ${authorities}">
-                <input type="checkbox" name="authorities"
+                <input type="checkbox" name="authority"
                        th:value="${authority.id}"
-                       th:field="*{authorities}"/>
+                       th:field="*{authority}"/>
 
                 <label th:text="#{${'authority.' + authority.name}}"
-                       th:for="${#ids.prev('authorities')}"></label>
+                       th:for="${#ids.prev('authority')}"></label>
             </p>
         </div>
 
         <div>
-            <button type="submit" clas="btn btn-primary" th:text="Zapisz"></button>
+            <button type="submit" class="btn btn-primary" th:text="Zapisz"></button>
+            <a th:href="@{/people/}" class="btn btn-default" th:text="Użytkownicy"></a>
         </div>
     </form>
 </section>
