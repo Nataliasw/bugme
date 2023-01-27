@@ -1,6 +1,10 @@
 package com.finalproject.bugme.project;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -11,8 +15,9 @@ public class ProjectService {
 
     private final ProjectRepository projectRepository;
 
-    public List<Project> findAll(ProjectFilter filter){
-        return projectRepository.findAll(filter.buildQuery());
+
+    public Page<Project> findAll(ProjectFilter filter, Pageable pageable) {
+        return projectRepository.findAll(filter.buildQuery(), pageable);
     }
 
 

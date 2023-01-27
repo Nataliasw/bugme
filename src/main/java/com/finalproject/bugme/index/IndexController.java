@@ -10,7 +10,10 @@ import org.springframework.web.servlet.ModelAndView;
 @RequestMapping("/")
 @RequiredArgsConstructor
 public class IndexController {
-
+    @GetMapping("/")
+    public String index() {
+        return "index";
+    }
     @GetMapping("/contact")
     public ModelAndView contact(){
         ModelAndView modelAndView = new ModelAndView("start/contact");

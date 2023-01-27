@@ -5,16 +5,23 @@ import com.finalproject.bugme.authority.Authority;
 import com.finalproject.bugme.comment.Comment;
 import com.finalproject.bugme.issue.Issue;
 import com.finalproject.bugme.project.Project;
+import com.finalproject.bugme.validators.UniqueUsername;
 import jakarta.persistence.Entity;
+import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.Size;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import jakarta.persistence.*;
+
 import java.util.Set;
 
 @Setter
+@NoArgsConstructor
 @Getter
 @Entity
+//@UniqueUsername
 public class Person {
 
     @Id
@@ -22,15 +29,24 @@ public class Person {
     @Column(nullable = false)
     private Long id;
 
+    @NotEmpty
+    @Size(min=5,max=255)
     @Column(nullable = false,unique = true,length = 255)
+
     private String login;
 
+    @NotEmpty
+    @Size(min=8,max=100)
     @Column(nullable = false,length = 255)
     private String password;
-
+    @NotEmpty
+    @Size(min=3,max=255)
     @Column
     private String email;
-
+    @Transient
+    String repeatedPassword;
+    @NotEmpty
+    @Size(min=3,max=255)
     @Column(nullable = false,length = 255)
     private String userRealName;
 
@@ -63,6 +79,5 @@ public class Person {
         this.userRealName = userRealName;
     }
 
-    public Person() {
-    }
+
 }
