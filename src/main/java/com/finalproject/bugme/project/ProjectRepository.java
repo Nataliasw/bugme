@@ -12,4 +12,6 @@ public interface ProjectRepository extends JpaRepository<Project,Long> , JpaSpec
     @Query(value = "select * from project where enabled=:enabled",nativeQuery = true)
     List<Project> findByEnabledNative(@Param("enabled") Boolean enabled);
 
+    List<Project> findAllByEnabled(Boolean enabled);
+
 }

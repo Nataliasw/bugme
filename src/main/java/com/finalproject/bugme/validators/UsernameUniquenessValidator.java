@@ -2,14 +2,19 @@ package com.finalproject.bugme.validators;
 
 import com.finalproject.bugme.person.Person;
 import com.finalproject.bugme.person.PersonRepository;
-import jakarta.validation.Constraint;
 import jakarta.validation.ConstraintValidator;
 import jakarta.validation.ConstraintValidatorContext;
 import lombok.AllArgsConstructor;
+import lombok.NoArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
 
 @AllArgsConstructor
 public class UsernameUniquenessValidator  implements ConstraintValidator<UniqueUsername, Person> {
+
     private final PersonRepository personRepository;
+
     @Override
     public void initialize(UniqueUsername constraintAnnotation){
         ConstraintValidator.super.initialize(constraintAnnotation);
