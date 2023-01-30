@@ -36,7 +36,7 @@ public class SecurityConfig {
                 .requestMatchers("/contact").permitAll()
                 .anyRequest().authenticated()
                 .and()
-                .formLogin().loginPage("/login").permitAll().defaultSuccessUrl("/index",true)
+                .formLogin().loginPage("/login").permitAll().defaultSuccessUrl("/",true)
                 .and()
                 .logout().permitAll();
 

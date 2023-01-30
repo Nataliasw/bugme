@@ -37,16 +37,13 @@ public class Project {
     @Column(unique = true, nullable = false)
     private Date dateCreated;
 
-    @Column(unique = true, nullable = false, length = 255)
-    private String code;
 
     @Column(columnDefinition="TEXT")
     private String description;
 
-    public Project(String name, boolean enabled,String code, String description){
+    public Project(String name, String description){
         this.name = name;
-        this.code = code;
-        this.enabled = enabled;
+        this.enabled = true;
         this.description = description;
         this.dateCreated = new Date();
     }
