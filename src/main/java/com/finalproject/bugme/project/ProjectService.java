@@ -8,7 +8,8 @@ import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-
+import java.util.stream.Collectors;
+import com.finalproject.bugme.person.Person;
 @Service
 @RequiredArgsConstructor
 public class ProjectService {
@@ -23,5 +24,9 @@ public class ProjectService {
 
     public List<Project> findAllEnabled(){
         return projectRepository.findByEnabledNative(true);
+    }
+
+    public List<Person> findAllCreators(){
+        return findAllEnabled().stream().map(Project::getCreator).collect(Collectors.toList());
     }
 }
