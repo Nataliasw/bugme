@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{layouts/mainLayout}">
 <head>
     <meta charset="UTF-8">
     <title>Bugtracker - projects</title>
@@ -15,7 +15,8 @@
     <link rel="shortcut icon" href="/images/favicon.ico"/>
 </head>
 <body>
-<div class="container">
+<secion layout:fragment="custom-content">
+<div class="container bg-dark">
 
     <h2 class="mt-3" th:text="#{projects.index}"></h2>
 
@@ -33,7 +34,7 @@
                 <option th:value="${null}" th:text="#{projects.creator}"></option>
                 <option th:each="c : ${creators}"
                         th:value="${c.getId()}"
-                        th:text="${c.getRealName()}"></option>
+                        th:text="${c.getUserRealName()}" class="text-dark"></option>
             </select>
         </div>
 
@@ -44,19 +45,19 @@
         </div>
 
         <div class="col">
-            <button type="submit" th:text="#{common.search}"
-                    class="btn btn-primary"></button>
+            <button  type="submit" th:text="#{common.search}"
+                    class="me-3 btn btn-info"></button>
 
-            <a th:href="@{/projects}" th:text="#{common.clear}"></a>
+            <a  th:href="@{/projects}" th:text="#{common.clear}" class="text-info"></a>
         </div>
     </form>
 
 
 
     <div th:each="project : ${projects}">
-        <div class="card mt-4">
+        <div class="card mt-4 bg-dark">
 
-            <h5 class="card-header" th:text="${project.getName()}"></h5>
+            <h5 class="card-header bg-secondary" th:text="${project.getName()}"></h5>
 
             <div class="card-body">
                 <p class="card-text" th:text="${project.getDescription()}"></p>
@@ -66,12 +67,12 @@
     </div>
 
     <div class="row mt-3">
-        <ul class="pagination">
+        <ul class="pagination ">
 
             <li th:if="${projects.number != 0}"
                 class="page-item">
                 <a th:href="@{'/projects?' + ${filter.toQueryString(projects.number - 1)}}"
-                   th:class="page-link">
+                   th:class="page-link ">
                     <i class="fa-solid fa-angle-left"></i>
                 </a>
             </li>
@@ -80,7 +81,7 @@
                 th:class="${'page-item ' + ((pageNumber == projects.number) ? 'active' : '')}">
                 <a th:href="@{'/projects?' + ${filter.toQueryString(pageNumber)}}"
                    th:text="${pageNumber + 1}"
-                   class="page-link"></a>
+                   class="page-link bg-info"></a>
             </li>
 
             <li th:if="${projects.number != (projects.totalPages - 1)}"
@@ -93,5 +94,6 @@
         </ul>
     </div>
 </div>
+</secion>
 </body>
 </html>

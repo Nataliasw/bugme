@@ -36,9 +36,10 @@ public class SecurityConfig {
                 .requestMatchers("/contact").permitAll()
                 .anyRequest().authenticated()
                 .and()
-                .formLogin().loginPage("/login").permitAll()
+                .formLogin().loginPage("/login").permitAll().defaultSuccessUrl("/index",true)
                 .and()
                 .logout().permitAll();
+
         return httpSecurity.build();
 
     }

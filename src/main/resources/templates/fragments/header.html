@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+
+</head>
+<body>
+<div class="container" th:fragment="header">
+  <header class="d-flex flex-wrap justify-content-center py-3 mb-4 border-bottom">
+    <a href="/" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto text-dark text-decoration-none">
+      <svg class="bi me-2" width="40" height="32"><use xlink:href="#bootstrap"></use></svg>
+      <i class="fas fa-tasks fa-lg"></i>&nbsp;
+      <span class="fs-4 title">Bugtracker  </span>
+
+    </a>
+
+    <ul class="nav nav-pills">
+      <li class="nav-item "><a href="/" class="nav-link active bg-info" aria-current="page" th:text="#{header.home}">Home</a></li>
+      <li class="nav-item"><a href="/projects" class="nav-link text-info" th:text="#{header.projects}" >Projects</a></li>
+      <li class="nav-item"><a href="#" class="nav-link text-info" th:text="#{header.profile}">Your Profile</a></li>
+      <li class="nav-item"><a href="#" class="nav-link text-info" th:text="#{header.logout}">Logout</a></li>
+
+
+    </ul>
+  </header>
+</div>
+
+
+</body>
+</html>
