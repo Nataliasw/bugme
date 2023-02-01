@@ -14,7 +14,19 @@
 }
 
 a{
-    color: black;
     text-decoration: none;
+}
 
+a.hover:hover{
+    color: cornflowerblue !important;
+    transition: 0.3s;
+}
+
+button, .corn{
+    background-color: cornflowerblue !important;
+    border: cornflowerblue !important;
+}
+
+.text-cfb{
+    color: cornflowerblue !important;
 }

@@ -1,9 +1,10 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{layouts/mainLayout}">
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
-
+  <link rel="stylesheet" th:href="@{/css/main.css}" type="text/css"/>
+  <link rel="shortcut icon" href="/images/favicon.ico"/>
 </head>
 <body>
 <div class="container" th:fragment="header">
@@ -16,10 +17,10 @@
     </a>
 
     <ul class="nav nav-pills">
-      <li class="nav-item "><a href="/" class="nav-link active bg-info" aria-current="page" th:text="#{header.home}">Home</a></li>
-      <li class="nav-item"><a href="/projects" class="nav-link text-info" th:text="#{header.projects}" >Projects</a></li>
-      <li class="nav-item"><a href="#" class="nav-link text-info" th:text="#{header.profile}">Your Profile</a></li>
-      <li class="nav-item"><a href="#" class="nav-link text-info" th:text="#{header.logout}">Logout</a></li>
+      <li class="nav-item "><a href="/" class="nav-link active corn" aria-current="page" th:text="#{header.home}">Home</a></li>
+      <li class="nav-item"><a href="/projects" class="nav-link text-cfb" th:text="#{header.projects}" >Projects</a></li>
+      <li class="nav-item"><a href="#" class="nav-link text-cfb" th:text="#{header.profile}">Your Profile</a></li>
+      <li class="nav-item"><a href="#" class="nav-link text-cfb" th:text="#{header.logout}">Logout</a></li>
 
 
     </ul>
