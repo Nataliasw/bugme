@@ -31,21 +31,25 @@ public class Project {
     private Person creator;
 
 
-    @Column(unique = true, nullable = false)
+    @Column(nullable = false)
     private boolean enabled;
 
     @Column(unique = true, nullable = false)
     private Date dateCreated;
 
-
+    @PrePersist
+    protected void onCreate() {
+        dateCreated = new Date();
+    }
     @Column(columnDefinition="TEXT")
     private String description;
 
-    public Project(String name, String description){
+    public Project(String name, String description,Person creator){
         this.name = name;
         this.enabled = true;
         this.description = description;
         this.dateCreated = new Date();
+        this.creator = creator;
     }
 
     public Project(){}

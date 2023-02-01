@@ -54,8 +54,9 @@
 
 
 
-    <div th:each="project : ${projects}">
-        <div class="card mt-4 bg-dark">
+    <div th:each="project : ${projects}" >
+
+        <div class="card mt-4 bg-dark col-8 ">
 
             <h5 class="card-header bg-secondary" th:text="${project.getName()}"></h5>
 

@@ -29,4 +29,8 @@ public class ProjectService {
     public List<Person> findAllCreators(){
         return findAllEnabled().stream().map(Project::getCreator).collect(Collectors.toList());
     }
+
+    public void saveProject(Project project){
+        projectRepository.save(project);
+    }
 }
