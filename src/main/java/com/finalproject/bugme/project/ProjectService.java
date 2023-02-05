@@ -6,6 +6,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 import com.finalproject.bugme.person.Person;
 @Service
@@ -17,6 +18,10 @@ public class ProjectService {
 
     public Page<Project> findAll(ProjectFilter filter, Pageable pageable) {
         return projectRepository.findAll(filter.buildQuery(), pageable);
+    }
+
+    public Project findById(Long id){
+        return projectRepository.findById(id).get();
     }
 
 

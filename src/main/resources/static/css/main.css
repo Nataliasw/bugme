@@ -15,10 +15,11 @@
 
 a{
     text-decoration: none;
+    color:white !important;
 }
 
 a.hover:hover{
-    color: cornflowerblue !important;
+    color: midnightblue !important;
     transition: 0.3s;
 }
 
@@ -29,4 +30,9 @@ button, .corn{
 
 .text-cfb{
     color: cornflowerblue !important;
+}
+
+.card-project{
+    background-color: cornflowerblue !important;
+    color: white !important;
 }
