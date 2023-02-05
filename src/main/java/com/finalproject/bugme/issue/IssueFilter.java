@@ -1,4 +1,4 @@
-package com.finalproject.bugme.project;
+package com.finalproject.bugme.issue;
 
 import com.finalproject.bugme.person.Person;
 import lombok.AllArgsConstructor;
@@ -9,45 +9,51 @@ import org.springframework.data.jpa.domain.Specification;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class ProjectFilter {
-
+public class IssueFilter {
 
     private String name;
+
+    private Person assignee;
+
     private Person creator;
+
     private String globalSearch;
 
-    public Specification<Project> buildQuery() {
+
+    public Specification<Issue> buildQuery() {
         return Specification.anyOf(
                 ilike("name", globalSearch),
                 ilike("description", globalSearch)
         ).and(
-                Specification.allOf(
+                Specification.anyOf(
                         ilike("name", name),
-                        equalTo("enabled", true),
-                        equalTo("creator",creator)
+                        equalTo("creator",creator),
+                        equalTo("assignee",assignee)
+
                 )
         );
     }
 
-    private Specification<Project> equalTo(String property, Object value) {
+
+    private Specification<Issue> equalTo(String property, Object value) {
         if (value == null) {
             return Specification.where(null);
         }
-        return (root, query, builder) -> builder.equal(root.get(property), value);
+        return ((root, query, builder) -> builder.equal(root.get(property), value));
     }
 
-    private Specification<Project> ilike(String property, String value) {
+    private Specification<Issue> ilike(String property, String value) {
         if (value == null) {
             return Specification.where(null);
         }
-
         return (root, query, builder) -> builder.like(builder.lower(root.get(property)), "%" + value.toLowerCase() + "%");
     }
 
     public String toQueryString(Integer page) {
-        return "page=" + page +
-                (name != null ? "&name=" + name : "") +
+        return "page=" + page + (name != null ? "&name=" + name : "") +
+                (assignee != null ? "&assignee=" + assignee.getId() : "") +
                 (creator != null ? "&creator=" + creator.getId() : "") +
-                (globalSearch != null ? "&globalSearch=" + globalSearch : "");
+                (globalSearch != null ? "&globalSearch" + globalSearch : "");
     }
+
 }

@@ -26,7 +26,7 @@ public class ProjectController {
     private final AuthenticationInterface authenticationInterface;
     private final PersonService personService;
 
-    @GetMapping("/")
+    @GetMapping()
     public ModelAndView project(@ModelAttribute ProjectFilter filter, Pageable pageable) {
         Page<Project> projects = projectService.findAll(filter, pageable);
         ModelAndView modelAndView = new ModelAndView("projects/index");
@@ -35,6 +35,7 @@ public class ProjectController {
         modelAndView.addObject("creators", projectService.findAllCreators());
         return modelAndView;
     }
+
 
 
     @GetMapping("/create")
