@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{layouts/mainLayout}">
+<head>
+    <meta charset="UTF-8">
+    <title>Btr - create issue</title>
+</head>
+<body>
+<section layout:fragment="custom-content">
+    <div class="container">
+        <form th:action="@{/issues/save}" th:object="${issue}" method="post">
+            <input type="hidden" th:field="*{id}"/>
+            <div class="row">
+                <div class="mb-3">
+                    <label for="name" class="form-label">Name</label>
+                    <input id="name" type="text" class="form-control" th:field="*{name}">
+                    <div class="form-text">Name must be unique</div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="mb-3">
+                    <label for="description" class="form-label">Description</label>
+                    <textarea th:field="*{description}" id="description" class="form-control"
+                              placeholder="description here..." style="height: 200px"></textarea>
+
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-2">
+                    <label for="assignee" class="form-label">Assginee</label>
+                    <select th:field="*{assignee}"
+                            class="form-control" id="assignee">
+                        <option th:each="u : ${users}"
+                                th:value="${u.getId()}"
+                                th:text="${u.getUserRealName()}" class="text-dark"></option>
+                    </select>
+                </div>
+
+                <div class="col-2">
+                    <label for="project" class="form-label">Project</label>
+                    <select th:field="*{project}"
+                            class="form-control" id="project">
+                        <option th:each="p : ${projects}"
+                                th:value="${p.getId()}"
+                                th:text="${p.getName()}" class="text-dark"></option>
+                    </select>
+                </div>
+                <div class="col-2">
+                    <label for="status" class="form-label">Status</label>
+                    <select th:field="*{statuses}"
+                            class="form-control" id="status">
+                        <option th:each="s : ${statuses}"
+                                th:value="${s.getId()}"
+                                th:text="${s.getName()}" class="text-dark"></option>
+                    </select>
+                </div>
+                <div class="col-2">
+                    <label for="type" class="form-label">Type</label>
+                    <select th:field="*{types}"
+                            class="form-control" id="type">
+                        <option th:each="t : ${types}"
+                                th:value="${t.getId()}"
+                                th:text="${t.getName()}" class="text-dark"></option>
+                    </select>
+                </div>
+                <div class="col-3">
+                    <div class="row">
+                        <p>Priority</p>
+                    </div>
+                    <div class="btn-group" role="group" aria-label="Basic mixed styles example">
+                        <p th:each="priority: ${priorities}" class="me-2">
+                            <input
+                                    type="checkbox"
+                                    class="btn-check"
+                                    autocomplete="off"
+                                    name="priorities"
+                                    th:value="${priority.id}"
+                                    th:field="*{priorities}"
+
+                            >
+                            <label th:if="${priority.id==3}"
+                                   th:text="#{${'priority.' + priority.name}}"
+                                   class="btn btn-success"
+                                   th:for="${#ids.prev('priorities')}"></label>
+                            <label th:if="${priority.id!=3}"
+                                   th:text="#{${'priority.' + priority.name}}"
+                                   th:class="'btn' +${priority.id==1 ? ' btn-danger':' btn-warning'}"
+
+                                   th:for="${#ids.prev('priorities')}"></label>
+                        </p>
+                    </div>
+                </div>
+
+
+
+            </div>
+            <div>
+                <button type="submit" class="btn hover corn" th:text="Zapisz"></button>
+                <a th:href="@{/issues}" class="btn btn-default" th:text="Zadania"></a>
+            </div>
+        </form>
+    </div>
+</section>
+</body>
+</html>

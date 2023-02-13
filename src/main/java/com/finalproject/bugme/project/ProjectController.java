@@ -56,7 +56,7 @@ public class ProjectController {
         project.setCreator(loggedInUser);
         project.setEnabled(true);
         projectService.saveProject(project);
-        modelAndView.setViewName("redirect:/projects/");
+        modelAndView.setViewName("redirect:/projects");
         return modelAndView;
     }
 
@@ -72,4 +72,11 @@ public class ProjectController {
         return modelAndView;
     }
 
+    @GetMapping(value="/project_delete/{id}")
+    public ModelAndView deleteProject(@PathVariable Long id){
+        ModelAndView modelAndView = new ModelAndView();
+        projectService.deleteProject(id);
+        modelAndView.setViewName("redirect:/projects");
+        return  modelAndView;
+    }
 }

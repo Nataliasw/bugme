@@ -46,7 +46,7 @@ public class PersonService {
         personRepository.save(person);
     }
 
-    List<Person> findAllUsers() {
+    public List<Person> findAllUsers() {
         return personRepository.findAll();
     }
 

@@ -2,6 +2,7 @@ package com.finalproject.bugme.issue;
 
 
 import com.finalproject.bugme.person.Person;
+import com.finalproject.bugme.project.Project;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -28,4 +29,17 @@ public class IssueService {
     public List<Person> findAllAssignees(){
         return issueRepository.findAll().stream().map(Issue::getAssignee).collect(Collectors.toList());
     }
+
+    public void saveIssue(Issue issue){issueRepository.save(issue);}
+
+    public  List<Issue> findAll(){return issueRepository.findAll();}
+
+    public void deleteIssue(Long id){
+        issueRepository.deleteById(id);
+    }
+
+    public Issue findById(Long id){
+        return issueRepository.findById(id).get();
+    }
+
 }

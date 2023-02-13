@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{layouts/mainLayout}">
+<head>
+    <meta charset="UTF-8">
+    <title>Btr - issue</title>
+</head>
+<body>
+<section layout:fragment="custom-content">
+    <div class="container bg-dark">
+        <div class="card bg-dark" th:object="${issue}">
+            <div class="card-header card-project">
+                <h5 th:text="${issue.getName()}"></h5>
+            </div>
+            <div class="card-body">
+                <h5 class="card-header" th:text="${issue.getCreator().getUserRealName()}"></h5>
+                <p class="card-text" th:text="${issue.getDescription()}"></p>
+
+              <a th:href="@{/issues/issue_delete/{id}(id=${issue.getId()})}" class="btn btn-danger" >Delete</a>
+
+
+            </div>
+        </div>
+    </div>
+
+
+</section>
+</body>
+</html>

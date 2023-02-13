@@ -82,7 +82,7 @@
                 </li>
 
                 <li th:each="issueNumber : ${#numbers.sequence(T(java.lang.Math).max(issues.number - 2, 0), T(java.lang.Math).min(issues.number + 2, issues.totalPages - 1))}"
-                    th:class="${'page-item ' + ((pageNumber == issues.number) ? 'active' : '')}">
+                    th:class="${'page-item ' + ((issueNumber == issues.number) ? 'active' : '')}">
                     <a th:href="@{'/issues?' + ${filter.toQueryString(issueNumber)}}"
                        th:text="${issueNumber + 1}"
                        class="page-link corn"></a>

@@ -7,17 +7,17 @@
 <body>
 <section layout:fragment="custom-content">
     <div class="container bg-dark">
-    <div class="card bg-dark" th:object="${project}">
-        <div class="card-header card-project">
-            <h5 th:text="${project.getName()}"></h5>
+        <div class="card bg-dark" th:object="${project}">
+            <div class="card-header card-project">
+                <h5 th:text="${project.getName()}"></h5>
+            </div>
+            <div class="card-body">
+                <h5 class="card-header" th:text="${project.getCreator().getUserRealName()}"></h5>
+                <p class="card-text" th:text="${project.getDescription()}"></p>
+                <a th:href="@{/projects/project_delete/{id}(id=${project.getId()})}" class="btn btn-danger" >Delete</a>
+                <!--            TO DO: list of issues -->
+            </div>
         </div>
-        <div class="card-body">
-            <h5 class="card-header" th:text="${project.getCreator().getUserRealName()}"></h5>
-            <p class="card-text" th:text="${project.getDescription()}"></p>
-            <a href="#" class="btn btn-primary">Go somewhere</a>
-<!--            TO DO: list of issues -->
-        </div>
-    </div>
     </div>
 
 </section>
