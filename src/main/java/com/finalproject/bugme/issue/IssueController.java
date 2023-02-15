@@ -1,6 +1,8 @@
 package com.finalproject.bugme.issue;
 
 import com.finalproject.bugme.authentication.AuthenticationInterface;
+import com.finalproject.bugme.mail.Mail;
+import com.finalproject.bugme.mail.MailService;
 import com.finalproject.bugme.person.Person;
 import com.finalproject.bugme.person.PersonService;
 import com.finalproject.bugme.priority.Priority;
@@ -34,6 +36,8 @@ public class IssueController {
     private final AuthenticationInterface authenticationInterface;
     private final PersonService personService;
     private final ProjectService projectService;
+
+    private final MailService mailService;
 
     private final TypeRepository typeRepository;
     private final StatusRepository statusRepository;
@@ -76,7 +80,13 @@ public class IssueController {
         String login = authentication.getName();
         Person loggedInUser = personService.findByLogin(login);
         issue.setCreator(loggedInUser);
+        Person assignee = issue.getAssignee();
+        Mail issueAssigned = new Mail();
+        issueAssigned.setContent("New issue " + issue.getName() + " assigned to you by " + issue.getCreator().getUserRealName());
+        issueAssigned.setSubject("New issue "+ issue.getName()+ " assigned");
+        issueAssigned.setRecipient(assignee.getEmail());
         issueService.saveIssue(issue);
+        mailService.sendMail(issueAssigned);
         modelAndView.setViewName("redirect:/issues");
         return modelAndView;
     }
