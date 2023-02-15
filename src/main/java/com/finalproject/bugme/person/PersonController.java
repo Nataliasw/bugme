@@ -59,4 +59,12 @@ public class PersonController {
         modelAndView.setViewName("redirect:/people/");
         return modelAndView;
     }
+
+    @GetMapping("/users/profile")
+    ModelAndView getProfile(){
+        ModelAndView modelAndView = new ModelAndView();
+
+        modelAndView.setViewName("/people/profile");
+        return modelAndView;
+    }
 }
