@@ -1,15 +1,14 @@
-package com.finalproject.bugme.authority;
+package com.finalproject.bugme.priority;
 
+import com.finalproject.bugme.authority.AuthorityName;
+import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
-
-import jakarta.persistence.*;
-
 
 @Setter
 @Getter
 @Entity
-public class Authority {
+public class Priority {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -18,15 +17,16 @@ public class Authority {
 
     @Column(nullable = false, unique = true)
     @Enumerated(EnumType.STRING)
-    private AuthorityName name;
+    private PriorityName name;
 
 
-
-    public Authority(AuthorityName name){
+    public Priority(PriorityName name){
         this.name = name;
     }
 
-    public Authority(){
+    public Priority(){
 
     }
+
+
 }

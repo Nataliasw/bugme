@@ -14,7 +14,25 @@
 }
 
 a{
-    color: black;
     text-decoration: none;
+    color:white !important;
+}
 
+a.hover:hover{
+    color: midnightblue !important;
+    transition: 0.3s;
+}
+
+button, .corn{
+    background-color: cornflowerblue !important;
+    border: cornflowerblue !important;
+}
+
+.text-cfb{
+    color: cornflowerblue !important;
+}
+
+.card-project{
+    background-color: cornflowerblue !important;
+    color: white !important;
 }

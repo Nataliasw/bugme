@@ -32,11 +32,11 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity) throws Exception {
         httpSecurity.authorizeHttpRequests()
-                .requestMatchers("/css/**").permitAll()
+                .requestMatchers("/css/**","/resources/**", "/static/**").permitAll()
                 .requestMatchers("/contact").permitAll()
                 .anyRequest().authenticated()
                 .and()
-                .formLogin().loginPage("/login").permitAll().defaultSuccessUrl("/index",true)
+                .formLogin().loginPage("/login").permitAll().defaultSuccessUrl("/",true)
                 .and()
                 .logout().permitAll();
 

@@ -46,8 +46,12 @@ public class PersonService {
         personRepository.save(person);
     }
 
-    List<Person> findAllUsers() {
+    public List<Person> findAllUsers() {
         return personRepository.findAll();
+    }
+
+    public Person findByLogin(String login){
+        return personRepository.findByLogin(login);
     }
 }
 

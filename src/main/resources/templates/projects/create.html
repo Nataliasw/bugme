@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{layouts/mainLayout}">
+<head>
+    <meta charset="UTF-8">
+    <title>Btr - create project</title>
+
+    <!--    Favicon-->
+    <link rel="shortcut icon" href="/images/favicon.ico"/>
+</head>
+<body>
+<section layout:fragment="custom-content">
+
+    <div class="container">
+        <form th:action="@{/projects/save}" th:object="${project}" method="post">
+            <input type="hidden" th:field="*{id}"/>
+            <div class="row">
+                <div class="mb-3">
+                    <label for="name"  class="form-label">Name</label>
+                    <input id="name" type="text" class="form-control" th:field="*{name}" >
+                    <div class="form-text">Name must be unique</div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="mb-3">
+                    <label for="description"  class="form-label">Description</label>
+                    <textarea th:field="*{description}" id="description" class="form-control" placeholder="description here..." style="height: 200px"></textarea>
+
+                </div>
+            </div>
+
+            <div>
+                <button type="submit" class="btn hover corn" th:text="Zapisz"></button>
+                <a th:href="@{/projects/}" class="btn btn-default" th:text="Projekty"></a>
+            </div>
+        </form>
+    </div>
+</section>
+</body>
+</html>
