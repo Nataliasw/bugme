@@ -1,14 +1,18 @@
 package com.finalproject.bugme.project;
 
 import com.finalproject.bugme.authentication.AuthenticationInterface;
+import com.finalproject.bugme.authority.Authority;
 import com.finalproject.bugme.issue.Issue;
 import com.finalproject.bugme.issue.IssueService;
 import com.finalproject.bugme.person.Person;
 import com.finalproject.bugme.person.PersonService;
+import jakarta.annotation.security.RolesAllowed;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.context.annotation.Role;
 import org.springframework.data.domain.Page;
 import org.springframework.security.access.annotation.Secured;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
@@ -17,6 +21,7 @@ import org.springframework.web.servlet.ModelAndView;
 import org.springframework.data.domain.Pageable;
 
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 import java.util.Set;
 
@@ -70,20 +75,37 @@ public class ProjectController {
     ModelAndView getProjectById(@PathVariable("id") Long id){
         ModelAndView modelAndView = new ModelAndView("projects/project-view");
         Project foundProject =projectService.findById(id);
+
+        Authentication authentication = authenticationInterface.getAuthentication();
+        Person loggedInUser = personService.findByLogin(authentication.getName());
         List<Issue> issues = issueService.findAllByProjectId(id);
         modelAndView.addObject("issues",issues);
         modelAndView.addObject("project",foundProject);
-
+modelAndView.addObject("person",loggedInUser);
 
 
         return modelAndView;
     }
 
+
     @GetMapping(value="/project_delete/{id}")
     public ModelAndView deleteProject(@PathVariable Long id){
         ModelAndView modelAndView = new ModelAndView();
-        projectService.deleteProject(id);
+
+        Authentication authentication = authenticationInterface.getAuthentication();
+        Person loggedInUser = personService.findByLogin(authentication.getName());
+        Set<Authority> authorities = loggedInUser.getAuthority();
+        if(authorities.stream().anyMatch(authority -> authority.getName().toString().equals("ROLE_MANAGE_PROJECT"))){
+            projectService.deleteProject(id);
+            return modelAndView;
+        }
+
+        if(Objects.equals(projectService.findById(id).getCreator().getId(), loggedInUser.getId())){
+            projectService.deleteProject(id);
+        }
         modelAndView.setViewName("redirect:/projects");
         return  modelAndView;
     }
+
+
 }

@@ -14,7 +14,8 @@
             <div class="card-body">
                 <h5 class="card-header" th:text="${project.getCreator().getUserRealName()}"></h5>
                 <p class="card-text" th:text="${project.getDescription()}"></p>
-                <a th:href="@{/projects/project_delete/{id}(id=${project.getId()})}" class="btn btn-danger">Delete</a>
+                <a th:href="@{/projects/project_delete/{id}(id=${project.getId()})}"
+                   th:class="'btn btn-danger ' + ${person eq project.getCreator()? ' ' : 'hidden'}">Delete</a>
 
             </div>
             <h2>List of Issues</h2>

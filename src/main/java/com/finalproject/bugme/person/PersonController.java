@@ -1,10 +1,12 @@
 package com.finalproject.bugme.person;
 
+import com.finalproject.bugme.authentication.AuthenticationInterface;
 import com.finalproject.bugme.authority.Authority;
 import com.finalproject.bugme.authority.AuthorityRepository;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.access.annotation.Secured;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -23,7 +25,7 @@ public class PersonController {
     private final PersonService personService;
     private final AuthorityRepository authorityRepository;
 
-    private final PersonRepository personRepository;
+ private final AuthenticationInterface authenticationInterface;
 
     @GetMapping("/")
     @Secured("ROLE_USERS_TAB")
@@ -63,7 +65,10 @@ public class PersonController {
     @GetMapping("/users/profile")
     ModelAndView getProfile(){
         ModelAndView modelAndView = new ModelAndView();
-
+        Authentication authentication = authenticationInterface.getAuthentication();
+        String login = authentication.getName();
+        Person loggedInUser = personService.findByLogin(login);
+        modelAndView.addObject("person",loggedInUser);
         modelAndView.setViewName("/people/profile");
         return modelAndView;
     }
