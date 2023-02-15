@@ -11,6 +11,8 @@ import com.finalproject.bugme.comment.Comment;
 import com.finalproject.bugme.person.Person;
 import com.finalproject.bugme.project.Project;
 import com.finalproject.bugme.tag.Tag;
+import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.Size;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -54,6 +56,8 @@ public class Issue {
     @JsonIgnoreProperties("issue")
     private List<Tag> tags;
 
+    @NotEmpty
+    @Size(min=2, max=255)
     @Column(nullable = false, length = 255)
     private String name;
 

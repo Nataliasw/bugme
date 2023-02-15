@@ -20,6 +20,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.security.core.Authentication;
@@ -59,23 +60,33 @@ public class IssueController {
     @GetMapping("/create")
     public ModelAndView create() {
         ModelAndView modelAndView = new ModelAndView("issues/create");
+        modelAndView.addObject("issue", new Issue());
+        return resetCreatePage(modelAndView);
+    }
+
+    private ModelAndView resetCreatePage(ModelAndView modelAndView) {
+
         List<Priority> priorities = priorityRepository.findAll();
         List<Status> statuses = statusRepository.findAll();
         List<Type> types = typeRepository.findAll();
         modelAndView.addObject("priorities", priorities);
         modelAndView.addObject("statuses", statuses);
         modelAndView.addObject("types", types);
-        modelAndView.addObject("issue", new Issue());
         modelAndView.addObject("users", personService.findAllUsers());
         modelAndView.addObject("projects", projectService.findAllEnabled());
-
-
         return modelAndView;
     }
 
     @PostMapping(value = "save")
-    public ModelAndView saveIssue(@ModelAttribute @Valid Issue issue) {
+    public ModelAndView saveIssue(@ModelAttribute @Valid Issue issue, BindingResult bindingResult) {
         ModelAndView modelAndView = new ModelAndView();
+        if (bindingResult.hasErrors()) {
+            modelAndView.setViewName("issues/create");
+            modelAndView.addObject("issue", issue);
+            System.out.println(bindingResult.getAllErrors());
+            return resetCreatePage(modelAndView);
+        }
+
         Authentication authentication = authenticationInterface.getAuthentication();
         String login = authentication.getName();
         Person loggedInUser = personService.findByLogin(login);
@@ -83,7 +94,7 @@ public class IssueController {
         Person assignee = issue.getAssignee();
         Mail issueAssigned = new Mail();
         issueAssigned.setContent("New issue " + issue.getName() + " assigned to you by " + issue.getCreator().getUserRealName());
-        issueAssigned.setSubject("New issue "+ issue.getName()+ " assigned");
+        issueAssigned.setSubject("New issue " + issue.getName() + " assigned");
         issueAssigned.setRecipient(assignee.getEmail());
         issueService.saveIssue(issue);
         mailService.sendMail(issueAssigned);
@@ -101,13 +112,12 @@ public class IssueController {
     }
 
 
-
-    @GetMapping(value="/issue_delete/{id}")
-    public ModelAndView deleteIssue(@PathVariable Long id){
+    @GetMapping(value = "/issue_delete/{id}")
+    public ModelAndView deleteIssue(@PathVariable Long id) {
         ModelAndView modelAndView = new ModelAndView();
         issueService.deleteIssue(id);
         modelAndView.setViewName("redirect:/issues");
-        return  modelAndView;
+        return modelAndView;
     }
 }
 
