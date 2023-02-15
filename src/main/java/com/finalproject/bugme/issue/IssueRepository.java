@@ -12,5 +12,7 @@ public interface IssueRepository extends JpaRepository<Issue,Long>,JpaSpecificat
 
     Issue findByName(String name);
 
+    List<Issue> findAllByProjectId(Long id);
+
 
 }

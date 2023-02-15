@@ -2,6 +2,7 @@ package com.finalproject.bugme.issue;
 
 
 import com.finalproject.bugme.person.Person;
+import com.finalproject.bugme.person.PersonRepository;
 import com.finalproject.bugme.project.Project;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -16,6 +17,7 @@ import java.util.stream.Collectors;
 public class IssueService {
 
     private final IssueRepository issueRepository;
+    private final PersonRepository personRepository;
 
     public Page<Issue> findAll(IssueFilter filter, Pageable pageable){
         return issueRepository.findAll(filter.buildQuery(),pageable);
@@ -42,4 +44,12 @@ public class IssueService {
         return issueRepository.findById(id).get();
     }
 
+
+    public List<Issue> findAllByProjectId(Long id){
+        return issueRepository.findAllByProjectId(id);
+    }
+
+    public Person findCreatorById(Long id){
+        return personRepository.findById(id).get();
+    }
 }

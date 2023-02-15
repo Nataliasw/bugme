@@ -14,8 +14,30 @@
             <div class="card-body">
                 <h5 class="card-header" th:text="${project.getCreator().getUserRealName()}"></h5>
                 <p class="card-text" th:text="${project.getDescription()}"></p>
-                <a th:href="@{/projects/project_delete/{id}(id=${project.getId()})}" class="btn btn-danger" >Delete</a>
-                <!--            TO DO: list of issues -->
+                <a th:href="@{/projects/project_delete/{id}(id=${project.getId()})}" class="btn btn-danger">Delete</a>
+
+            </div>
+            <h2>List of Issues</h2>
+            <div th:each="issue : ${issues}" class="ms-5">
+
+                <div class="card mt-4 bg-dark col-8 ">
+
+                    <h5 class="card-header bg-secondary"></p><a th:href="@{/issues/issue/{id}(id=${issue.getId()})}"
+                                                            th:text="${issue.getName()}"
+                                                            class="text-white hover"></a>
+                    </h5>
+                    <p class="card-header bg-project" th:text="${issue.getCreator().getUserRealName()}"></p>
+                    <p class="card-header bg-project text-end" th:text="${issue.getAssignee().getUserRealName()}"></p>
+                    <div class="card-body">
+                        <p class="card-text" th:text="${issue.getDescription()}"></p>
+                        <div class="row">
+                        <p class="card-text col-4" th:text="${issue.getStatuses().iterator().next().getName()}"></p>
+                        <p class="card-text col-4" th:text="${issue.getPriorities().iterator().next().getName()}"></p>
+                        <p class="card-text col-4" th:text="${issue.getTypes().iterator().next().getName()}"></p>
+                        </div>
+                    </div>
+
+                </div>
             </div>
         </div>
     </div>

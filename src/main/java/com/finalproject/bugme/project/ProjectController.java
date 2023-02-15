@@ -1,6 +1,8 @@
 package com.finalproject.bugme.project;
 
 import com.finalproject.bugme.authentication.AuthenticationInterface;
+import com.finalproject.bugme.issue.Issue;
+import com.finalproject.bugme.issue.IssueService;
 import com.finalproject.bugme.person.Person;
 import com.finalproject.bugme.person.PersonService;
 import jakarta.validation.Valid;
@@ -14,7 +16,9 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.data.domain.Pageable;
 
+import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 
 
 @Controller
@@ -25,6 +29,8 @@ public class ProjectController {
     private final ProjectService projectService;
     private final AuthenticationInterface authenticationInterface;
     private final PersonService personService;
+
+    private final IssueService issueService;
 
     @GetMapping()
     public ModelAndView project(@ModelAttribute ProjectFilter filter, Pageable pageable) {
@@ -64,7 +70,8 @@ public class ProjectController {
     ModelAndView getProjectById(@PathVariable("id") Long id){
         ModelAndView modelAndView = new ModelAndView("projects/project-view");
         Project foundProject =projectService.findById(id);
-
+        List<Issue> issues = issueService.findAllByProjectId(id);
+        modelAndView.addObject("issues",issues);
         modelAndView.addObject("project",foundProject);
 
 
