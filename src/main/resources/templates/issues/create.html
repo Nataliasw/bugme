@@ -64,16 +64,18 @@
                         <option th:each="t : ${types}"
                                 th:value="${t.getId()}"
                                 th:text="${t.getName()}" class="text-dark"></option>
+
+
                     </select>
                 </div>
                 <div class="col-3">
                     <div class="row">
                         <p>Priority</p>
                     </div>
-                    <div class="btn-group" role="group" aria-label="Basic mixed styles example">
+                    <div class="btn-group btn-group-toggle" role="group" data-toggle="buttons">
                         <p th:each="priority: ${priorities}" class="me-2">
                             <input
-                                    type="checkbox"
+                                    type="radio"
                                     class="btn-check"
                                     autocomplete="off"
                                     name="priorities"
@@ -83,14 +85,18 @@
                             >
                             <label th:if="${priority.id==3}"
                                    th:text="#{${'priority.' + priority.name}}"
-                                   class="btn btn-success"
+                                   class="btn btn-success active"
                                    th:for="${#ids.prev('priorities')}"></label>
                             <label th:if="${priority.id!=3}"
                                    th:text="#{${'priority.' + priority.name}}"
                                    th:class="'btn' +${priority.id==1 ? ' btn-danger':' btn-warning'}"
 
                                    th:for="${#ids.prev('priorities')}"></label>
+
                         </p>
+                        <small class="text-danger"
+                               th:if="${#fields.hasErrors('priorities')}"
+                               th:errors="*{priorities}"></small>
                     </div>
                 </div>
 

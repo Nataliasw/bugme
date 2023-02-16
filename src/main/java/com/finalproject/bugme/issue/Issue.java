@@ -39,7 +39,7 @@ public class Issue {
             joinColumns = @JoinColumn(name = "issue_id"),
             inverseJoinColumns = @JoinColumn(name = "status_id"))
     private Set<Status> statuses;
-
+    @NotEmpty
     @ManyToMany(cascade = CascadeType.MERGE)
     @JoinTable(name = "issue_priority",
             joinColumns = @JoinColumn(name = "issue_id"),
@@ -112,5 +112,18 @@ public class Issue {
     }
 
     public Issue() {
+    }
+
+    public String getPriorityName(){
+
+        return this.getPriorities().stream().findFirst().get().getName().toString();
+    }
+
+    public String getTypeName(){
+        return this.getTypes().stream().findFirst().get().getName().toString();
+    }
+
+    public String getStatusName(){
+        return this.getStatuses().stream().findFirst().get().getName().toString();
     }
 }

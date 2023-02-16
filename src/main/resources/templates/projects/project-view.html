@@ -14,8 +14,8 @@
             <div class="card-body">
                 <h5 class="card-header" th:text="${project.getCreator().getUserRealName()}"></h5>
                 <p class="card-text" th:text="${project.getDescription()}"></p>
-                <a th:href="@{/projects/project_delete/{id}(id=${project.getId()})}"
-                   th:class="'btn btn-danger ' + ${person eq project.getCreator()? ' ' : 'hidden'}">Delete</a>
+                <a th:if="${hasAuthority==true}" class="btn btn-success">Delete</a>
+                <a th:unless="${hasAuthority==true}" th:href="@{/projects/project_delete/{id}(id=${project.getId()})}" th:class="'btn btn-danger ' + ${person eq project.getCreator()? ' ' : 'd-none'}">Delete</a>
 
             </div>
             <h2>List of Issues</h2>
@@ -32,9 +32,9 @@
                     <div class="card-body">
                         <p class="card-text" th:text="${issue.getDescription()}"></p>
                         <div class="row">
-                        <p class="card-text col-4" th:text="${issue.getStatuses().iterator().next().getName()}"></p>
-                        <p class="card-text col-4" th:text="${issue.getPriorities().iterator().next().getName()}"></p>
-                        <p class="card-text col-4" th:text="${issue.getTypes().iterator().next().getName()}"></p>
+                        <p class="card-text col-4" th:text="${issue.getStatusName()}"></p>
+                        <p class="card-text col-4" th:text="${issue.getPriorityName()}"></p>
+                        <p class="card-text col-4" th:text="${issue.getTypeName()}"></p>
                         </div>
                     </div>
 

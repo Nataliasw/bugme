@@ -78,9 +78,11 @@ public class ProjectController {
 
         Authentication authentication = authenticationInterface.getAuthentication();
         Person loggedInUser = personService.findByLogin(authentication.getName());
+        Boolean hasAuthority = loggedInUser.getAuthority().stream().anyMatch(authority -> authority.getName().toString().equals("ROLE_MANAGE_PROJECT"));
         List<Issue> issues = issueService.findAllByProjectId(id);
         modelAndView.addObject("issues",issues);
         modelAndView.addObject("project",foundProject);
+        modelAndView.addObject("hasAuthority",hasAuthority);
 modelAndView.addObject("person",loggedInUser);
 
 
