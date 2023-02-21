@@ -5,7 +5,28 @@
     <title>Bugtracker - people list</title>
 </head>
 <body>
+<section layout:fragment="custom-content">
+    <a th:href="@{/people/create}" class="btn btn-success" >Add new</a>
+    <table class="table" >
+        <thead>
+        <tr>
 
+            <th scope="col">Real Name</th>
+            <th scope="col">Login</th>
+            <th scope="col">Email</th>
+            <th scope="col">Delete</th>
+        </tr>
+        </thead>
+        <tbody >
+        <tr th:each="person : ${people}">
+            <td th:text="${person.getUserRealName()}"></td>
+            <td th:text="${person.getLogin()}"></td>
+            <td th:text="${person.getEmail()}"></td>
+            <td><a th:href="@{/people/people_delete/{id}(id=${person.getId()})}" class="btn btn-danger" >Delete</a></td>
+        </tr>
+        </tbody>
+    </table>
+</section>
 
 </body>
 </html>

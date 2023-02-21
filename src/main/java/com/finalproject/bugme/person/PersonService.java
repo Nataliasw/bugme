@@ -39,11 +39,12 @@ public class PersonService {
         savePerson(person);
     }
 
-    protected void savePerson(Person person) {
+    protected Person savePerson(Person person) {
         String hashedPassword = bCryptPasswordEncoder.encode(person.getPassword());
         person.setPassword(hashedPassword);
 
         personRepository.save(person);
+        return person;
     }
 
     public List<Person> findAllUsers() {
@@ -52,6 +53,18 @@ public class PersonService {
 
     public Person findByLogin(String login){
         return personRepository.findByLogin(login);
+    }
+
+    public void deleteUser(Long id){
+        personRepository.deleteById(id);
+    }
+
+    public void changePass(Person person){
+        String hashedPassword = bCryptPasswordEncoder.encode(person.getPassword());
+        person.setPassword(hashedPassword);
+
+        personRepository.updatePassword(person.getId(),person.getPassword());
+
     }
 }
 

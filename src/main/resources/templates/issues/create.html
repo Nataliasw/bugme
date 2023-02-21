@@ -2,7 +2,7 @@
 <html lang="en" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{layouts/mainLayout}">
 <head>
     <meta charset="UTF-8">
-    <title>Btr - create issue</title>
+    <title th:text="#{issues.title}"></title>
 </head>
 <body>
 <section layout:fragment="custom-content">
@@ -11,18 +11,18 @@
             <input type="hidden" th:field="*{id}"/>
             <div class="row">
                 <div class="mb-3">
-                    <label for="name" class="form-label">Name</label>
+                    <label for="name" class="form-label" th:text="#{issues.name}"></label>
                     <input id="name" type="text" th:class="'form-control ' + ${#fields.hasErrors('name')? 'is-invalid': ''}"
                            th:field="*{name}"/>
                     <small class="text-danger"
                            th:if="${#fields.hasErrors('name')}"
                            th:errors="*{name}"></small>
-                    <div class="form-text">Name must be unique</div>
+                    <div class="form-text" th:text="#{issues.warning}"></div>
                 </div>
             </div>
             <div class="row">
                 <div class="mb-3">
-                    <label for="description" class="form-label">Description</label>
+                    <label for="description" class="form-label" th:text="#{issues.description}"></label>
                     <textarea th:field="*{description}" id="description" class="form-control"
                               placeholder="description here..." style="height: 200px"></textarea>
 
@@ -30,7 +30,7 @@
             </div>
             <div class="row">
                 <div class="col-2">
-                    <label for="assignee" class="form-label">Assginee</label>
+                    <label for="assignee" class="form-label" th:text="#{issues.assignee}"></label>
                     <select th:field="*{assignee}"
                             class="form-control" id="assignee">
                         <option th:each="u : ${users}"
@@ -40,7 +40,7 @@
                 </div>
 
                 <div class="col-2">
-                    <label for="project" class="form-label">Project</label>
+                    <label for="project" class="form-label" th:text="#{issues.project}"></label>
                     <select th:field="*{project}"
                             class="form-control" id="project">
                         <option th:each="p : ${projects}"
@@ -49,7 +49,7 @@
                     </select>
                 </div>
                 <div class="col-2">
-                    <label for="status" class="form-label">Status</label>
+                    <label for="status" class="form-label" th:text="#{issues.status}"></label>
                     <select th:field="*{statuses}"
                             class="form-control" id="status">
                         <option th:each="s : ${statuses}"
@@ -58,7 +58,7 @@
                     </select>
                 </div>
                 <div class="col-2">
-                    <label for="type" class="form-label">Type</label>
+                    <label for="type" class="form-label" th:text="#{issues.type}"></label>
                     <select th:field="*{types}"
                             class="form-control" id="type">
                         <option th:each="t : ${types}"
@@ -70,7 +70,7 @@
                 </div>
                 <div class="col-3">
                     <div class="row">
-                        <p>Priority</p>
+                        <p th:text="#{issues.priority}">Priority</p>
                     </div>
                     <div class="btn-group btn-group-toggle" role="group" data-toggle="buttons">
                         <p th:each="priority: ${priorities}" class="me-2">
@@ -104,8 +104,8 @@
 
             </div>
             <div>
-                <button type="submit" class="btn hover corn" th:text="Zapisz"></button>
-                <a th:href="@{/issues}" class="btn btn-default" th:text="Zadania"></a>
+                <button type="submit" class="btn hover corn" th:text="#{common.save}"></button>
+                <a th:href="@{/issues}" class="btn btn-default" th:text="#{issues.list}"></a>
             </div>
         </form>
     </div>
