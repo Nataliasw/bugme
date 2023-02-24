@@ -20,7 +20,7 @@
         <input type="hidden" th:field="*{id}"/>
         <div class="row">
             <div class="mb-3">
-                <div><label for="login">Login</label></div>
+                <div><label for="login" th:text="#{people.login}"></label></div>
             </div>
             <div>
                 <input
@@ -40,7 +40,7 @@
         </div>
         <div class="row">
             <div class="mb-3">
-                <div><label for="email">Email</label></div>
+                <div><label for="email" th:text="#{people.email}">Email</label></div>
             </div>
             <div>
                 <input
@@ -50,13 +50,17 @@
                         placeholder="email"
                         th:class="'form-control ' + ${#fields.hasErrors('email') ? 'is-invalid' : ''}"
                         />
+                <small class="text-danger"
+                       th:if="${#fields.hasErrors('email')}"
+                       th:errors="*{email}"></small>
 
+                </small>
             </div>
 
         </div>
         <div class="row">
             <div class="mb-3">
-                <div><label for="user_real_name">Imię</label></div>
+                <div><label for="user_real_name" th:text="#{people.name}"></label></div>
             </div>
             <div>
                 <input
@@ -73,7 +77,7 @@
         </div>
         <div class="mb-3">
             <div>
-                <label for="password">Hasło</label>
+                <label for="password" th:text="#{common.password}"></label>
             </div>
             <div>
                 <input id="password"
@@ -88,7 +92,7 @@
             </div>
             <div class="mb-3">
                 <div>
-                    <label for="repeated-password">Powtórz hasło</label>
+                    <label for="repeated-password" th:text="#{common.repeatpassword}"></label>
                 </div>
                 <div>
                     <input id="repeated-password"
@@ -105,7 +109,7 @@
         </div>
 
         <div class="mb-3">
-            Uprawnienia:
+            <span th:text="#{people.authorities}"></span>
 
             <p th:each="authority : ${authorities}">
                 <input type="checkbox" name="authority"
@@ -117,11 +121,11 @@
             </p>
         </div>
         <div th:if="${#fields.hasGlobalErrors()}">
-            <p th:each="err : ${#fields.globalErrors()}" th:text="${err}">...</p>
+            <p th:each="err : ${#fields.globalErrors()}" th:text="${err}"></p>
         </div>
         <div>
-            <button type="submit" class="btn btn-primary" th:text="Zapisz"></button>
-            <a th:href="@{/people/}" class="btn btn-default" th:text="Użytkownicy"></a>
+            <button type="submit" class="btn btn-primary" th:text="#{common.save}"></button>
+            <a th:href="@{/people/}" class="btn btn-default" th:text="#{people.list}"></a>
         </div>
     </form>
 </section>

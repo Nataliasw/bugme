@@ -5,10 +5,10 @@ import com.finalproject.bugme.person.Person;
 import jakarta.validation.ConstraintValidator;
 import jakarta.validation.ConstraintValidatorContext;
 
-public class ValidPasswordsValidator implements ConstraintValidator<ValidPassword,Person> {
+public class ValidPasswordsValidator implements ConstraintValidator<ValidPasswords,Person> {
 
     @Override
-    public void initialize(ValidPassword constraintAnnotation){
+    public void initialize(ValidPasswords constraintAnnotation){
         ConstraintValidator.super.initialize(constraintAnnotation);
     }
 

@@ -1,31 +1,22 @@
 package com.finalproject.bugme.issue;
 
 import com.finalproject.bugme.authentication.AuthenticationInterface;
+import com.finalproject.bugme.enums.State;
 import com.finalproject.bugme.mail.Mail;
 import com.finalproject.bugme.mail.MailService;
 import com.finalproject.bugme.person.Person;
 import com.finalproject.bugme.person.PersonService;
-import com.finalproject.bugme.priority.Priority;
-import com.finalproject.bugme.priority.PriorityRepository;
-import com.finalproject.bugme.project.Project;
 import com.finalproject.bugme.project.ProjectService;
-import com.finalproject.bugme.status.Status;
-import com.finalproject.bugme.status.StatusRepository;
-import com.finalproject.bugme.type.Type;
-import com.finalproject.bugme.type.TypeRepository;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
-import org.springframework.boot.Banner;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
-import org.springframework.security.core.Authentication;
-
-import java.util.List;
 
 @Controller
 @RequestMapping("/issues")
@@ -40,9 +31,7 @@ public class IssueController {
 
     private final MailService mailService;
 
-    private final TypeRepository typeRepository;
-    private final StatusRepository statusRepository;
-    private final PriorityRepository priorityRepository;
+
 
 
     @GetMapping
@@ -66,12 +55,6 @@ public class IssueController {
 
     private ModelAndView resetCreatePage(ModelAndView modelAndView) {
 
-        List<Priority> priorities = priorityRepository.findAll();
-        List<Status> statuses = statusRepository.findAll();
-        List<Type> types = typeRepository.findAll();
-        modelAndView.addObject("priorities", priorities);
-        modelAndView.addObject("statuses", statuses);
-        modelAndView.addObject("types", types);
         modelAndView.addObject("users", personService.findAllUsers());
         modelAndView.addObject("projects", projectService.findAllEnabled());
         return modelAndView;
@@ -101,12 +84,36 @@ public class IssueController {
         modelAndView.setViewName("redirect:/issues");
         return modelAndView;
     }
+    @PostMapping(value = "update")
+    public ModelAndView updateIssue(@ModelAttribute @Valid Issue issue, BindingResult bindingResult) {
+        ModelAndView modelAndView = new ModelAndView();
+        if (bindingResult.hasErrors()) {
+            modelAndView.setViewName("issues/issue_edit");
+            modelAndView.addObject("issue", issue);
+            System.out.println(bindingResult.getAllErrors());
+            return resetCreatePage(modelAndView);
+        }
+        Issue issueDate = issueService.findById(issue.getId());
+        issue.setDateCreated(issueDate.getDateCreated());
+        Authentication authentication = authenticationInterface.getAuthentication();
+        String login = authentication.getName();
+        Person loggedInUser = personService.findByLogin(login);
+        issue.setCreator(loggedInUser);
 
-    @GetMapping("/issue/{id}")
-    ModelAndView getIssueById(@PathVariable("id") Long id) {
-        ModelAndView modelAndView = new ModelAndView("issues/issue-view");
-        Issue foundIssue = issueService.findById(id);
-        modelAndView.addObject("issue", foundIssue);
+        issueService.saveIssue(issue);
+
+        modelAndView.setViewName("redirect:/issues");
+        return modelAndView;
+    }
+
+
+    @GetMapping("/{id}")
+    ModelAndView show(@PathVariable Long id) {
+        ModelAndView modelAndView = new ModelAndView("issues/issue_edit");
+
+        modelAndView.addObject("issue", issueService.findById(id));
+        modelAndView.addObject("projects", projectService.findAllEnabled());
+        modelAndView.addObject("people", personService.findAllUsers());
 
         return modelAndView;
     }
@@ -118,6 +125,16 @@ public class IssueController {
         issueService.deleteIssue(id);
         modelAndView.setViewName("redirect:/issues");
         return modelAndView;
+    }
+
+    @PatchMapping("/state/{id}")
+    ResponseEntity<Void> updateState(@PathVariable Long id, @RequestBody State state) {
+
+        Issue issue = issueService.findById(id);
+        issue.setState(state);
+        issueService.saveIssue(issue);
+
+        return ResponseEntity.ok().build();
     }
 }
 

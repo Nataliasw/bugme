@@ -3,6 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <title th:text="#{issues.title}"></title>
+    <script src="/js/issue.js"></script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.21.1/axios.min.js"
+            integrity="sha512-bZS47S7sPOxkjU/4Bt0zrhEtWx0y0CRkhEp8IckzK+ltifIIE9EMIMTuT/mEzoIMewUINruDBIR/jJnbguonqQ=="
+            crossorigin="anonymous"></script>
 </head>
 <body>
 <section layout:fragment="custom-content">
@@ -49,60 +54,44 @@
                     </select>
                 </div>
                 <div class="col-2">
-                    <label for="status" class="form-label" th:text="#{issues.status}"></label>
-                    <select th:field="*{statuses}"
-                            class="form-control" id="status">
-                        <option th:each="s : ${statuses}"
-                                th:value="${s.getId()}"
-                                th:text="${s.getName()}" class="text-dark"></option>
+                    <label for="state" class="form-label" th:text="#{issues.status}"></label>
+                    <select th:field="*{state}"
+                            class="form-control" id="state">
+                        <option th:value="${null}"></option>
+                        <option th:each="s : ${T(com.finalproject.bugme.enums.State).values()}"
+                                th:text="${s}"
+                                th:value="${s}"></option>
                     </select>
                 </div>
                 <div class="col-2">
                     <label for="type" class="form-label" th:text="#{issues.type}"></label>
-                    <select th:field="*{types}"
+                    <select th:field="*{type}"
                             class="form-control" id="type">
-                        <option th:each="t : ${types}"
-                                th:value="${t.getId()}"
-                                th:text="${t.getName()}" class="text-dark"></option>
+                        <option th:value="${null}"></option>
+                        <option th:each="t : ${T(com.finalproject.bugme.enums.Type).values()}"
+                                th:value="${t}"
+                                th:text="${t}" class="text-dark"></option>
 
 
                     </select>
                 </div>
-                <div class="col-3">
-                    <div class="row">
-                        <p th:text="#{issues.priority}">Priority</p>
-                    </div>
-                    <div class="btn-group btn-group-toggle" role="group" data-toggle="buttons">
-                        <p th:each="priority: ${priorities}" class="me-2">
-                            <input
-                                    type="radio"
-                                    class="btn-check"
-                                    autocomplete="off"
-                                    name="priorities"
-                                    th:value="${priority.id}"
-                                    th:field="*{priorities}"
+                <div class="col-2">
+                    <label for="priority" class="form-label" th:text="#{issues.priority}"></label>
+                    <select th:field="*{priority}"
+                            class="form-control" id="priority">
+                        <option th:value="${null}"></option>
+                        <option th:each="p : ${T(com.finalproject.bugme.enums.Priority).values()}"
+                                th:value="${p}"
+                                th:text="${p}" class="text-dark"></option>
 
-                            >
-                            <label th:if="${priority.id==3}"
-                                   th:text="#{${'priority.' + priority.name}}"
-                                   class="btn btn-success active"
-                                   th:for="${#ids.prev('priorities')}"></label>
-                            <label th:if="${priority.id!=3}"
-                                   th:text="#{${'priority.' + priority.name}}"
-                                   th:class="'btn' +${priority.id==1 ? ' btn-danger':' btn-warning'}"
 
-                                   th:for="${#ids.prev('priorities')}"></label>
-
-                        </p>
-                        <small class="text-danger"
-                               th:if="${#fields.hasErrors('priorities')}"
-                               th:errors="*{priorities}"></small>
-                    </div>
+                    </select>
+                </div>
                 </div>
 
 
 
-            </div>
+
             <div>
                 <button type="submit" class="btn hover corn" th:text="#{common.save}"></button>
                 <a th:href="@{/issues}" class="btn btn-default" th:text="#{issues.list}"></a>

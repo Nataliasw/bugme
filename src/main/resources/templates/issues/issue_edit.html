@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{layouts/mainLayout}">
+<head>
+    <meta charset="UTF-8">
+    <title>Issue view</title>
+
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.21.1/axios.min.js"
+          integrity="sha512-bZS47S7sPOxkjU/4Bt0zrhEtWx0y0CRkhEp8IckzK+ltifIIE9EMIMTuT/mEzoIMewUINruDBIR/jJnbguonqQ=="
+          crossorigin="anonymous"></script>
+</head>
+<body>
+<section layout:fragment="custom-content">
+  <div class="container">
+    <form th:action="@{/issues/update}" th:object="${issue}" method="post">
+      <input type="hidden" th:field="*{id}" id="issue-id"/>
+
+      <div class="row">
+        <div class="mb-3">
+          <label for="name" class="form-label" th:text="#{issues.name}"></label>
+          <input id="name" type="text" th:class="'form-control ' + ${#fields.hasErrors('name')? 'is-invalid': ''}"
+                 th:field="*{name}"/>
+          <small class="text-danger"
+                 th:if="${#fields.hasErrors('name')}"
+                 th:errors="*{name}"></small>
+          <div class="form-text" th:text="#{issues.warning}"></div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="mb-3">
+          <label for="description" class="form-label" th:text="#{issues.description}"></label>
+          <textarea th:field="*{description}" id="description" class="form-control"
+                    placeholder="description here..." style="height: 200px"></textarea>
+
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-2">
+          <label for="assignee" class="form-label" th:text="#{issues.assignee}"></label>
+          <select th:field="*{assignee}"
+                  class="form-control" id="assignee">
+            <option th:each="p : ${people}"
+                    th:value="${p.getId()}"
+                    th:text="${p.getUserRealName()}" class="text-dark"></option>
+          </select>
+        </div>
+
+        <div class="col-2">
+          <label for="project" class="form-label" th:text="#{issues.project}"></label>
+          <select th:field="*{project}"
+                  class="form-control" id="project">
+            <option th:each="p : ${projects}"
+                    th:value="${p.getId()}"
+                    th:text="${p.getName()}" class="text-dark"></option>
+          </select>
+        </div>
+        <div class="col-2">
+          <label for="state" class="form-label" th:text="#{issues.status}"></label>
+          <select th:field="*{state}"
+                  class="form-control" id="state" onchange="setState()">
+            <option th:value="${null}"></option>
+            <option th:each="s : ${T(com.finalproject.bugme.enums.State).values()}"
+                    th:text="${s}"
+                    th:value="${s}"></option>
+          </select>
+        </div>
+        <div class="col-2">
+          <label for="type" class="form-label" th:text="#{issues.type}"></label>
+          <select th:field="*{type}"
+                  class="form-control" id="type">
+            <option th:value="${null}"></option>
+            <option th:each="t : ${T(com.finalproject.bugme.enums.Type).values()}"
+                    th:value="${t}"
+                    th:text="${t}" class="text-dark"></option>
+
+
+          </select>
+        </div>
+        <div class="col-2">
+          <label for="priority" class="form-label" th:text="#{issues.priority}"></label>
+          <select th:field="*{priority}"
+                  class="form-control" id="priority">
+            <option th:value="${null}"></option>
+            <option th:each="p : ${T(com.finalproject.bugme.enums.Priority).values()}"
+                    th:value="${p}"
+                    th:text="${p}" class="text-dark"></option>
+
+
+          </select>
+        </div>
+      </div>
+
+
+
+
+      <div>
+        <button type="submit" class="btn hover corn" th:text="#{common.save}"></button>
+        <a th:href="@{/issues}" class="btn btn-default" th:text="#{issues.list}"></a>
+      </div>
+    </form>
+  </div>
+</section>
+</body>
+</html>
