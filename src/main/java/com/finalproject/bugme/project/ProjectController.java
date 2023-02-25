@@ -75,20 +75,23 @@ public class ProjectController {
     ModelAndView getProjectById(@PathVariable("id") Long id){
         ModelAndView modelAndView = new ModelAndView("projects/project-view");
         Project foundProject =projectService.findById(id);
-
-        Authentication authentication = authenticationInterface.getAuthentication();
-        Person loggedInUser = personService.findByLogin(authentication.getName());
-        Boolean hasAuthority = loggedInUser.getAuthority().stream().anyMatch(authority -> authority.getName().toString().equals("ROLE_MANAGE_PROJECT"));
         List<Issue> issues = issueService.findAllByProjectId(id);
         modelAndView.addObject("issues",issues);
         modelAndView.addObject("project",foundProject);
-        modelAndView.addObject("hasAuthority",hasAuthority);
-modelAndView.addObject("person",loggedInUser);
 
 
-        return modelAndView;
+
+        return resetPage(modelAndView);
     }
 
+    public ModelAndView resetPage(ModelAndView modelAndView){
+        Authentication authentication = authenticationInterface.getAuthentication();
+        Person loggedInUser = personService.findByLogin(authentication.getName());
+        Boolean hasAuthority = loggedInUser.getAuthority().stream().anyMatch(authority -> authority.getName().toString().equals("ROLE_MANAGE_PROJECT"));
+        modelAndView.addObject("hasAuthority",hasAuthority);
+        modelAndView.addObject("person",loggedInUser);
+        return modelAndView;
+    }
 
     @GetMapping(value="/project_delete/{id}")
     public ModelAndView deleteProject(@PathVariable Long id){
@@ -109,5 +112,28 @@ modelAndView.addObject("person",loggedInUser);
         return  modelAndView;
     }
 
+    @PostMapping(value = "update")
+    public ModelAndView updateIssue(@ModelAttribute @Valid Project project, BindingResult bindingResult) {
+        ModelAndView modelAndView = new ModelAndView();
+        if (bindingResult.hasErrors()) {
+            modelAndView.setViewName("projects/project-view");
+            modelAndView.addObject("project", project);
+            List<Issue> issues = issueService.findAllByProjectId(project.getId());
+            modelAndView.addObject("issues",issues);
+            System.out.println(bindingResult.getAllErrors());
+            return resetPage(modelAndView);
+        }
+        Project projectDate = projectService.findById(project.getId());
+        project.setDateCreated(projectDate.getDateCreated());
+        Authentication authentication = authenticationInterface.getAuthentication();
+        String login = authentication.getName();
+        Person loggedInUser = personService.findByLogin(login);
+        project.setCreator(loggedInUser);
+
+        projectService.saveProject(project);
+
+        modelAndView.setViewName("redirect:/projects");
+        return modelAndView;
+    }
 
 }

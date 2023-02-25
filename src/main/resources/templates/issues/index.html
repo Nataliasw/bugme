@@ -6,11 +6,11 @@
 </head>
 <body>
 <section layout:fragment="custom-content">
-  <h1>List of Issues</h1>
+  <h1 th:text="#{issues.index}"></h1>
 
     <div class="container bg-dark">
 
-        <h2 class="mt-3" th:text="#{issues.index}"></h2>
+
 
         <form th:action="@{/issues}" th:object="${filter}" class="row">
 

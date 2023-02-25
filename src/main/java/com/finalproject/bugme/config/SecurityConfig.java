@@ -34,6 +34,7 @@ public class SecurityConfig {
         httpSecurity.authorizeHttpRequests()
                 .requestMatchers("/css/**","/resources/**", "/static/**").permitAll()
                 .requestMatchers("/contact").permitAll()
+                .requestMatchers("/people/create").permitAll()
                 .anyRequest().authenticated()
                 .and()
                 .formLogin().loginPage("/login").permitAll().defaultSuccessUrl("/",true)

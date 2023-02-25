@@ -6,42 +6,74 @@
 </head>
 <body>
 <section layout:fragment="custom-content">
-    <div class="container bg-dark">
-        <div class="card bg-dark" th:object="${project}">
-            <div class="card-header card-project">
-                <h5 th:text="${project.getName()}"></h5>
+
+
+    <div class="container">
+        <div class="row">
+            <div class="col-6">
+                <span class="me-3" th:text="#{projects.creator} +' :'"></span>
+                <span th:text="${project.getCreator().getUserRealName()}"></span>
             </div>
-            <div class="card-body">
-                <h5 class="card-header" th:text="${project.getCreator().getUserRealName()}"></h5>
-                <p class="card-text" th:text="${project.getDescription()}"></p>
-                <a th:if="${hasAuthority==true}" class="btn btn-success">Delete</a>
-                <a th:unless="${hasAuthority==true}" th:href="@{/projects/project_delete/{id}(id=${project.getId()})}" th:class="'btn btn-danger ' + ${person eq project.getCreator()? ' ' : 'd-none'}">Delete</a>
-
+            <div class="col-6 text-end">
+            <a th:if="${hasAuthority==true}" class="btn btn-success">Delete</a>
+            <a th:unless="${hasAuthority==true}" th:href="@{/projects/project_delete/{id}(id=${project.getId()})}" th:class="'btn btn-danger ' + ${person eq project.getCreator()? ' ' : 'd-none'}">Delete</a>
             </div>
-            <h2>List of Issues</h2>
-            <div th:each="issue : ${issues}" class="ms-5">
+        </div>
 
-                <div class="card mt-4 bg-dark col-8 ">
+        <form th:action="@{/projects/update}" th:object="${project}" method="post" class="mb-4">
+            <input type="hidden" th:field="*{id}" id="issue-id"/>
 
-                    <h5 class="card-header bg-secondary"></p><a th:href="@{/issues/issue/{id}(id=${issue.getId()})}"
-                                                            th:text="${issue.getName()}"
-                                                            class="text-white hover"></a>
-                    </h5>
-                    <p class="card-header bg-project" th:text="${issue.getCreator().getUserRealName()}"></p>
-                    <p class="card-header bg-project text-end" th:text="${issue.getAssignee().getUserRealName()}"></p>
-                    <div class="card-body">
-                        <p class="card-text" th:text="${issue.getDescription()}"></p>
-                        <div class="row">
-                        <p class="card-text col-4" th:text="${issue.getStatusName()}"></p>
-                        <p class="card-text col-4" th:text="${issue.getPriorityName()}"></p>
-                        <p class="card-text col-4" th:text="${issue.getTypeName()}"></p>
-                        </div>
-                    </div>
+            <div class="row">
+                <div class="mb-3">
+                    <label for="name" class="form-label" th:text="#{projects.name}"></label>
+                    <input id="name" type="text" th:class="'form-control ' + ${#fields.hasErrors('name')? 'is-invalid': ''}"
+                           th:field="*{name}"/>
+                    <small class="text-danger"
+                           th:if="${#fields.hasErrors('name')}"
+                           th:errors="*{name}"></small>
+                    <div class="form-text" th:text="#{issues.warning}"></div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="mb-3">
+                    <label for="description" class="form-label" th:text="#{projects.description}"></label>
+                    <textarea th:field="*{description}" id="description" class="form-control"
+                              placeholder="description here..." style="height: 200px"></textarea>
 
                 </div>
             </div>
+
+
+
+            <div>
+                <button type="submit" class="btn hover corn" th:text="#{common.save}"></button>
+                <a th:href="@{/issues}" class="btn btn-default" th:text="#{projects.index}"></a>
+            </div>
+        </form>
+        <h2>List of Issues</h2>
+        <div th:each="issue : ${issues}" class="ms-5">
+
+            <div class="card mt-4 bg-dark col-8 ">
+
+                <h5 class="card-header bg-secondary"></p><a th:href="@{/issues/issue/{id}(id=${issue.getId()})}"
+                                                            th:text="${issue.getName()}"
+                                                            class="text-white hover"></a>
+                </h5>
+                <p class="card-header bg-project" th:text="${issue.getCreator().getUserRealName()}"></p>
+                <p class="card-header bg-project text-end" th:text="${issue.getAssignee().getUserRealName()}"></p>
+                <div class="card-body">
+                    <p class="card-text" th:text="${issue.getDescription()}"></p>
+                    <div class="row">
+                        <p class="card-text col-4" th:text="${issue.getState()}"></p>
+                        <p class="card-text col-4" th:text="${issue.getPriority()}"></p>
+                        <p class="card-text col-4" th:text="${issue.getType()}"></p>
+                    </div>
+                </div>
+
+            </div>
         </div>
     </div>
+
 
 </section>
 </body>
