@@ -36,7 +36,7 @@ public class Project {
     @Column(nullable = false)
     private boolean enabled;
 
-    @Column(unique = true, nullable = false)
+    @Column(nullable = false)
     private Date dateCreated;
 
     @PrePersist
