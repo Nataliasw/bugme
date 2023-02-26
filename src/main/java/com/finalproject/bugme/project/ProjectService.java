@@ -1,6 +1,8 @@
 package com.finalproject.bugme.project;
 
+import lombok.AllArgsConstructor;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -10,8 +12,9 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 import com.finalproject.bugme.person.Person;
 @Service
-@RequiredArgsConstructor
+@AllArgsConstructor
 public class ProjectService {
+
 
     private final ProjectRepository projectRepository;
 
@@ -41,5 +44,8 @@ public class ProjectService {
         projectRepository.deleteById(id);
     }
 
+    public Project findByName(String name) {
+        return projectRepository.findByName(name);
+    }
 
 }

@@ -2,11 +2,9 @@ package com.finalproject.bugme.issue;
 
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.finalproject.bugme.priority.Priority;
-import com.finalproject.bugme.status.Status;
-import com.finalproject.bugme.status.StatusName;
-import com.finalproject.bugme.type.Type;
-import com.finalproject.bugme.type.TypeName;
+import com.finalproject.bugme.enums.State;
+import com.finalproject.bugme.enums.Priority;
+import com.finalproject.bugme.enums.Type;
 import com.finalproject.bugme.comment.Comment;
 import com.finalproject.bugme.person.Person;
 import com.finalproject.bugme.project.Project;
@@ -34,23 +32,16 @@ public class Issue {
     private Long id;
 
 
-    @ManyToMany(cascade = CascadeType.MERGE)
-    @JoinTable(name = "issue_status",
-            joinColumns = @JoinColumn(name = "issue_id"),
-            inverseJoinColumns = @JoinColumn(name = "status_id"))
-    private Set<Status> statuses;
+    @Column(nullable = false)
+    @Enumerated(EnumType.STRING)
+    State state = State.TODO;
+    @Column(nullable = false)
+    @Enumerated(EnumType.STRING)
+    Priority priority = Priority.LOW;
 
-    @ManyToMany(cascade = CascadeType.MERGE)
-    @JoinTable(name = "issue_priority",
-            joinColumns = @JoinColumn(name = "issue_id"),
-            inverseJoinColumns = @JoinColumn(name = "priority_id"))
-    private Set<Priority> priorities;
-
-    @ManyToMany(cascade = CascadeType.MERGE)
-    @JoinTable(name = "issue_type",
-            joinColumns = @JoinColumn(name = "issue_id"),
-            inverseJoinColumns = @JoinColumn(name = "type_id"))
-    private Set<Type> types;
+    @Column(nullable = false)
+    @Enumerated(EnumType.STRING)
+    Type type = Type.TASK;
 
     @OneToMany(mappedBy = "issue")
     @JsonIgnoreProperties("issue")
@@ -77,6 +68,7 @@ public class Issue {
     @PreUpdate
     protected void onUpdate() {
         lastUpdate = new Date();
+
     }
 
     @Column(nullable = false)
@@ -113,4 +105,10 @@ public class Issue {
 
     public Issue() {
     }
+
+
+
+
+
+
 }

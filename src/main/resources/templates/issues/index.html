@@ -6,11 +6,11 @@
 </head>
 <body>
 <section layout:fragment="custom-content">
-  <h1>List of Issues</h1>
+  <h1 th:text="#{issues.index}"></h1>
 
     <div class="container bg-dark">
 
-        <h2 class="mt-3" th:text="#{issues.index}"></h2>
+
 
         <form th:action="@{/issues}" th:object="${filter}" class="row">
 
@@ -58,7 +58,7 @@
 
             <div class="card mt-4 bg-dark col-8 ">
 
-                <h5 class="card-header bg-secondary"><a th:href="@{/issues/issue/{id}(id=${issue.getId()})}"
+                <h5 class="card-header bg-secondary"><a th:href="@{/issues/{id}(id=${issue.getId()})}"
                                                         th:text="${issue.getName()}" class="text-white hover"></a>
                 </h5>
 

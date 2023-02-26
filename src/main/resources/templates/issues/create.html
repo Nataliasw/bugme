@@ -2,7 +2,12 @@
 <html lang="en" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{layouts/mainLayout}">
 <head>
     <meta charset="UTF-8">
-    <title>Btr - create issue</title>
+    <title th:text="#{issues.title}"></title>
+    <script src="/js/issue.js"></script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.21.1/axios.min.js"
+            integrity="sha512-bZS47S7sPOxkjU/4Bt0zrhEtWx0y0CRkhEp8IckzK+ltifIIE9EMIMTuT/mEzoIMewUINruDBIR/jJnbguonqQ=="
+            crossorigin="anonymous"></script>
 </head>
 <body>
 <section layout:fragment="custom-content">
@@ -11,18 +16,18 @@
             <input type="hidden" th:field="*{id}"/>
             <div class="row">
                 <div class="mb-3">
-                    <label for="name" class="form-label">Name</label>
+                    <label for="name" class="form-label" th:text="#{issues.name}"></label>
                     <input id="name" type="text" th:class="'form-control ' + ${#fields.hasErrors('name')? 'is-invalid': ''}"
                            th:field="*{name}"/>
                     <small class="text-danger"
                            th:if="${#fields.hasErrors('name')}"
                            th:errors="*{name}"></small>
-                    <div class="form-text">Name must be unique</div>
+                    <div class="form-text" th:text="#{issues.warning}"></div>
                 </div>
             </div>
             <div class="row">
                 <div class="mb-3">
-                    <label for="description" class="form-label">Description</label>
+                    <label for="description" class="form-label" th:text="#{issues.description}"></label>
                     <textarea th:field="*{description}" id="description" class="form-control"
                               placeholder="description here..." style="height: 200px"></textarea>
 
@@ -30,7 +35,7 @@
             </div>
             <div class="row">
                 <div class="col-2">
-                    <label for="assignee" class="form-label">Assginee</label>
+                    <label for="assignee" class="form-label" th:text="#{issues.assignee}"></label>
                     <select th:field="*{assignee}"
                             class="form-control" id="assignee">
                         <option th:each="u : ${users}"
@@ -40,7 +45,7 @@
                 </div>
 
                 <div class="col-2">
-                    <label for="project" class="form-label">Project</label>
+                    <label for="project" class="form-label" th:text="#{issues.project}"></label>
                     <select th:field="*{project}"
                             class="form-control" id="project">
                         <option th:each="p : ${projects}"
@@ -49,57 +54,47 @@
                     </select>
                 </div>
                 <div class="col-2">
-                    <label for="status" class="form-label">Status</label>
-                    <select th:field="*{statuses}"
-                            class="form-control" id="status">
-                        <option th:each="s : ${statuses}"
-                                th:value="${s.getId()}"
-                                th:text="${s.getName()}" class="text-dark"></option>
+                    <label for="state" class="form-label" th:text="#{issues.status}"></label>
+                    <select th:field="*{state}"
+                            class="form-control" id="state">
+                        <option th:value="${null}"></option>
+                        <option th:each="s : ${T(com.finalproject.bugme.enums.State).values()}"
+                                th:text="${s}"
+                                th:value="${s}"></option>
                     </select>
                 </div>
                 <div class="col-2">
-                    <label for="type" class="form-label">Type</label>
-                    <select th:field="*{types}"
+                    <label for="type" class="form-label" th:text="#{issues.type}"></label>
+                    <select th:field="*{type}"
                             class="form-control" id="type">
-                        <option th:each="t : ${types}"
-                                th:value="${t.getId()}"
-                                th:text="${t.getName()}" class="text-dark"></option>
+                        <option th:value="${null}"></option>
+                        <option th:each="t : ${T(com.finalproject.bugme.enums.Type).values()}"
+                                th:value="${t}"
+                                th:text="${t}" class="text-dark"></option>
+
+
                     </select>
                 </div>
-                <div class="col-3">
-                    <div class="row">
-                        <p>Priority</p>
-                    </div>
-                    <div class="btn-group" role="group" aria-label="Basic mixed styles example">
-                        <p th:each="priority: ${priorities}" class="me-2">
-                            <input
-                                    type="checkbox"
-                                    class="btn-check"
-                                    autocomplete="off"
-                                    name="priorities"
-                                    th:value="${priority.id}"
-                                    th:field="*{priorities}"
+                <div class="col-2">
+                    <label for="priority" class="form-label" th:text="#{issues.priority}"></label>
+                    <select th:field="*{priority}"
+                            class="form-control" id="priority">
+                        <option th:value="${null}"></option>
+                        <option th:each="p : ${T(com.finalproject.bugme.enums.Priority).values()}"
+                                th:value="${p}"
+                                th:text="${p}" class="text-dark"></option>
 
-                            >
-                            <label th:if="${priority.id==3}"
-                                   th:text="#{${'priority.' + priority.name}}"
-                                   class="btn btn-success"
-                                   th:for="${#ids.prev('priorities')}"></label>
-                            <label th:if="${priority.id!=3}"
-                                   th:text="#{${'priority.' + priority.name}}"
-                                   th:class="'btn' +${priority.id==1 ? ' btn-danger':' btn-warning'}"
 
-                                   th:for="${#ids.prev('priorities')}"></label>
-                        </p>
-                    </div>
+                    </select>
+                </div>
                 </div>
 
 
 
-            </div>
+
             <div>
-                <button type="submit" class="btn hover corn" th:text="Zapisz"></button>
-                <a th:href="@{/issues}" class="btn btn-default" th:text="Zadania"></a>
+                <button type="submit" class="btn hover corn" th:text="#{common.save}"></button>
+                <a th:href="@{/issues}" class="btn btn-default" th:text="#{issues.list}"></a>
             </div>
         </form>
     </div>

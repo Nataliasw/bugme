@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.finalproject.bugme.issue.Issue;
 import com.finalproject.bugme.person.Person;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotEmpty;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -20,6 +21,7 @@ public class Project {
     @GeneratedValue
     private Long id;
 
+
     @Column(unique = true, nullable = false, length = 255)
     private String name;
 
@@ -34,7 +36,7 @@ public class Project {
     @Column(nullable = false)
     private boolean enabled;
 
-    @Column(unique = true, nullable = false)
+    @Column(nullable = false)
     private Date dateCreated;
 
     @PrePersist

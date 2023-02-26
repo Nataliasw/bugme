@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{layouts/mainLayout}">
+<head>
+    <meta charset="UTF-8">
+    <title th:text="#{header.profile}"></title>
+  <script src="https://unpkg.com/axios@1.1.2/dist/axios.min.js"></script>
+</head>
+<body>
+<section layout:fragment="custom-content">
+  <form th:action="@{/people}" th:object="${person}" method="post">
+
+    <input type="hidden" th:field="*{id}" id="issue-id"/>
+
+
+    <div class="form-group row mb-3">
+      <div class="col-sm-4">
+        <span class="col-form-label" th:text="#{people.login}"></span>
+      </div>
+      <div class="col-sm-8">
+        <span th:text="${person.getLogin()}"></span>
+      </div>
+    </div>
+
+    <div class="form-group row mb-3">
+      <div class="col-sm-4">
+        <label class="col-form-label" th:text="#{people.email}"></label>
+      </div>
+      <div class="col-sm-8">
+        <input class="form-control"
+               th:field="*{email}"/>
+      </div>
+    </div>
+
+    <div class="form-group row mb-3">
+      <div class="col-sm-4">
+        <label class="col-form-label" th:text="#{people.name}"></label>
+      </div>
+      <div class="col-sm-8">
+        <input class="form-control"
+               th:field="*{userRealName}"/>
+      </div>
+    </div>
+
+    <div class="form-group row mb-3">
+      <div class="col-sm-4">
+        <label class="col-form-label" th:text="#{common.password}"></label>
+      </div>
+      <div class="col-sm-8">
+        <a th:href="@{/people/changepassword}" class="btn btn-success" th:text="#{common.changepassword}"></a>
+      </div>
+    </div>
+    <div>
+      <button type="submit" class="btn btn-primary" th:text="#{common.save}"></button>
+
+    </div>
+  </form>
+
+</section>
+</body>
+</html>

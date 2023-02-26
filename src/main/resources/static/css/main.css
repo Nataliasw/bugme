@@ -17,6 +17,11 @@ a{
     text-decoration: none;
     color:white !important;
 }
+a.pag{
+    color: black !important;
+    background-color: cornflowerblue !important;
+    border: none;
+}
 
 a.hover:hover{
     color: midnightblue !important;

@@ -6,7 +6,9 @@ import com.finalproject.bugme.comment.Comment;
 import com.finalproject.bugme.issue.Issue;
 import com.finalproject.bugme.project.Project;
 import com.finalproject.bugme.validators.UniqueUsername;
+import com.finalproject.bugme.validators.ValidPasswords;
 import jakarta.persistence.Entity;
+import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.Size;
 import lombok.Getter;
@@ -21,7 +23,8 @@ import java.util.Set;
 @NoArgsConstructor
 @Getter
 @Entity
-//@UniqueUsername
+@UniqueUsername
+@ValidPasswords
 public class Person {
 
     @Id
@@ -40,6 +43,7 @@ public class Person {
     @Column(nullable = false,length = 255)
     private String password;
     @NotEmpty
+    @Email
     @Size(min=3,max=255)
     @Column
     private String email;

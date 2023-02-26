@@ -14,6 +14,7 @@ public interface ProjectRepository extends JpaRepository<Project,Long> , JpaSpec
 
     List<Project> findAllByEnabled(Boolean enabled);
 
+    Project findByName(String name);
 
 
 }
