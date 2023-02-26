@@ -15,7 +15,7 @@ import com.finalproject.bugme.person.Person;
 @AllArgsConstructor
 public class ProjectService {
 
-    @Autowired
+
     private final ProjectRepository projectRepository;
 
 
