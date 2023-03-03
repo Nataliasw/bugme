@@ -15,7 +15,7 @@
                 <span th:text="${project.getCreator().getUserRealName()}"></span>
             </div>
             <div class="col-6 text-end">
-            <a th:if="${hasAuthority==true}" class="btn btn-success">Delete</a>
+            <a th:if="${hasAuthority==true}" th:href="@{/projects/project_delete/{id}(id=${project.getId()})}" class="btn btn-success">Delete</a>
             <a th:unless="${hasAuthority==true}" th:href="@{/projects/project_delete/{id}(id=${project.getId()})}" th:class="'btn btn-danger ' + ${person eq project.getCreator()? ' ' : 'd-none'}">Delete</a>
             </div>
         </div>

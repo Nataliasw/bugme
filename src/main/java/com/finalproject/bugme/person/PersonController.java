@@ -77,6 +77,10 @@ public class PersonController {
         String login = authentication.getName();
         Person loggedInUser = personService.findByLogin(login);
         modelAndView.addObject("person", loggedInUser);
+        Boolean hasAuthorityCreate = loggedInUser.getAuthority().stream().anyMatch(authority -> authority.getName().toString().equals("ROLE_CREATE_USER"));
+        Boolean hasAuthoritySee = loggedInUser.getAuthority().stream().anyMatch(authority -> authority.getName().toString().equals("ROLE_USERS_TAB"));
+        modelAndView.addObject("hasAuthSee",hasAuthoritySee);
+        modelAndView.addObject("hasAuthCreate",hasAuthorityCreate);
         modelAndView.setViewName("/people/profile");
         return modelAndView;
     }

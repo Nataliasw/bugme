@@ -7,7 +7,7 @@
 </head>
 <body>
 <section layout:fragment="custom-content">
-  <form th:action="@{/people}" th:object="${person}" method="post">
+  <form th:action="@{/people}" th:object="${person}" method="post" class="mb-3">
 
     <input type="hidden" th:field="*{id}" id="issue-id"/>
 
@@ -54,7 +54,8 @@
 
     </div>
   </form>
-
+  <a th:if="${hasAuthCreate==true}"  th:href="@{/people/create}" class="btn btn-info" role="button" th:text="#{common.newAccount}"></a>
+  <a th:if="${hasAuthSee==true}"  th:href="@{/people/}" class="btn btn-info" role="button" th:text="#{people.list}"></a>
 </section>
 </body>
 </html>
