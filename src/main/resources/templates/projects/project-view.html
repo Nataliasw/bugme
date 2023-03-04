@@ -15,7 +15,7 @@
                 <span th:text="${project.getCreator().getUserRealName()}"></span>
             </div>
             <div class="col-6 text-end">
-            <a th:if="${hasAuthority==true}" class="btn btn-success">Delete</a>
+            <a th:if="${hasAuthority==true}" th:href="@{/projects/project_delete/{id}(id=${project.getId()})}" class="btn btn-success">Delete</a>
             <a th:unless="${hasAuthority==true}" th:href="@{/projects/project_delete/{id}(id=${project.getId()})}" th:class="'btn btn-danger ' + ${person eq project.getCreator()? ' ' : 'd-none'}">Delete</a>
             </div>
         </div>
@@ -55,11 +55,13 @@
 
             <div class="card mt-4 bg-dark col-8 ">
 
-                <h5 class="card-header bg-secondary"></p><a th:href="@{/issues/issue/{id}(id=${issue.getId()})}"
+                <h5 class="card-header bg-secondary"></p><span th:text="#{issues.name} +': '"> </span><a th:href="@{/issues/issue/{id}(id=${issue.getId()})}"
                                                             th:text="${issue.getName()}"
                                                             class="text-white hover"></a>
                 </h5>
+                <span th:text="#{issues.creator}" class="text-cfb ms-3"></span>
                 <p class="card-header bg-project" th:text="${issue.getCreator().getUserRealName()}"></p>
+                <span th:text="#{issues.assignee}" class="text-end text-cfb me-3"></span>
                 <p class="card-header bg-project text-end" th:text="${issue.getAssignee().getUserRealName()}"></p>
                 <div class="card-body">
                     <p class="card-text" th:text="${issue.getDescription()}"></p>
