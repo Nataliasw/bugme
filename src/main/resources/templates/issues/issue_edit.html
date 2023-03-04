@@ -57,7 +57,7 @@
         <div class="col-2">
           <label for="state" class="form-label" th:text="#{issues.status}"></label>
           <select th:field="*{state}"
-                  class="form-control" id="state" onchange="setState()">
+                  class="form-control" id="state" >
             <option th:value="${null}"></option>
             <option th:each="s : ${T(com.finalproject.bugme.enums.State).values()}"
                     th:text="${s}"
